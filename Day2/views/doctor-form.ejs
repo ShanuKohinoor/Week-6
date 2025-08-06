@@ -1,0 +1,31 @@
+<!--                        Add new doctor form-->
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor form</title>
+    <link rel="stylesheet" href="/style.css"> 
+
+  </head>
+  <body>
+    <div>
+    <h1><%= title %></h1>
+    <form action="/doctors/add"  method="post">
+    <label>Name</label>
+    <input type="text" name="name" required>
+    <br>
+    <br>
+
+    <label>Specialization</label>
+    <input type="text" name="specialization" required>
+    <br>
+    <br>
+
+    <button class="btn" type="submit" >Add a Doctor</button>
+
+    </form>
+
+    </div>
+  </body>
+  </html>                      

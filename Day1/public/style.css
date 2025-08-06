@@ -1,0 +1,229 @@
+body:not(.error-page) {    /* Body style except error page */
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #005f73, #0a9396, #94d2bd);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* HOME PAGE FOR PATIENT AND DOCTOR */
+.home-container {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 50px 70px;
+  border-radius: 25px;
+  box-shadow: rgba(0, 95, 115, 0.5);
+}
+
+.home-container h1 {
+  font-size: 3.5rem;
+  color: #043f41;
+  margin-bottom: 40px;
+  text-shadow: 3px 3px 10px rgba(0, 95, 115, 0.7);
+}
+
+.home-links {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+}
+
+.home-links a {
+  text-decoration: none;
+  background-color: #d2f3f5;
+  color: #005f73;
+  padding: 15px 32px;
+  border-radius: 12px;
+  font-weight: bolder;
+  font-size: 1.1rem;
+  box-shadow: 3px 6px 15px rgba(0, 95, 115, 0.6);
+}
+
+.home-links a:hover {
+  background-color: #005f73;
+  color: #e0fbfc;
+}
+
+
+
+
+/* ALL PATIENT AND DOCTOR PAGE */
+
+.list-container {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 40px 60px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 95, 115, 0.3);
+}
+
+.list-container h1 {
+  font-size: 3rem;
+  color: maroon;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 8px rgba(128, 0, 0, 0.4);
+}
+
+.add-btn {
+  display: inline-block;
+  background-color: maroon;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-bottom: 25px;
+  box-shadow: 3px 6px 12px rgba(128, 0, 0, 0.5);
+}
+
+.add-btn:hover {
+  background-color: #800000;
+}
+
+.list {
+  list-style: none;   /* removes dots */
+  padding: 0;
+}
+
+
+.list li {
+  margin: 10px 0;
+  font-size: 1.2rem;
+  color: #022c22;
+}
+
+.list a{
+  text-decoration: none;
+  font-weight: bold;
+  color: maroon;
+}
+
+.list a:hover{
+  color: #b30000;
+  text-decoration: underline;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  text-decoration: none;
+  color: #043f41;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 2px solid #043f41;
+  border-radius: 8px;
+}
+
+.back-btn:hover {
+  background-color: #043f41;
+  color: white;
+}
+
+
+
+
+/*FORM PAGE FOR ADDING NEW PATIENT AND DOCTOR */
+
+form {
+  background-color: rgb(173, 208, 236);
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 400px;
+}
+
+form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 40 px;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+form label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  
+}
+
+form input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #97b3c4;
+  border-radius: 5px;
+
+}
+
+form button {
+  margin-top: 20px;
+  width: 50%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+
+.btn {
+  display: block;             
+  margin: 20px auto 0 auto;  
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+
+/* SINGLE PATIENT AND DOCTOR   */
+.Detail-card {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 40px;
+  background-color: #f0f8ff;  /* very light blue */
+  border-radius: 8px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.Detail-card h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #005f73;
+  text-decoration: underline;
+
+}
+
+.Detail-card p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.Detail-card a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #005f73;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.Detail-card a:hover {
+  text-decoration: underline;
+}
+
+
+

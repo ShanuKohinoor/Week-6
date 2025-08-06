@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Details</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <!--Main Container-->
+  <div class="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
+
+    <!-- Page title with student's name -->
+    <h1 class="text-2xl font-bold bg-white border border-blue mb-4">Details for <%= student.name %></h1>
+    
+    <!--Single student information-->
+    <p><strong>ID:</strong> <%= student.id %></p>
+    <p><strong>Name:</strong> <%= student.name %></p>
+    <p><strong>Grade:</strong> <%= student.grade %></p>
+
+    <!-- Go back to the full student list link -->
+    <a href="/students" class="mt-4 inline-block text-blue-500 hover:underline">← Back to Student List</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!--                           To get all doctors details-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Doctors</title>
+      <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+  <div class="list-container">
+    <h1><%= title %></h1>
+    <a class="add-btn" href="/doctors/add"> + Add doctor</a>
+    <ul class="list">
+                    <% doctors.forEach(d => { %>
+
+    <li>
+      <strong>
+        <a href="/doctors/<%= d.id %>" ><%= d.name %></a>- <%= d.specialization %>
+      </strong>
+    </li>
+
+
+   <% })  %>
+        </ul>
+
+        <a class="back-btn" href="/">Back to home page</a>
+  </div>
+
+</body>
+</html>

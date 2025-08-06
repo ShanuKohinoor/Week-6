@@ -1,0 +1,178 @@
+<!--
+                        Day 1
+
+Organize Your Code: Controller Splitting
+o Create a controllers/ folder to store your logic functions.
+o Move route logic out of route files into these controller files.
+ What is asynchronous programming in Node.js
+ async/await syntax
+ Try–Catch inside async functions
+ Centralized Error Handling in Express
+ next(err) usage
+ Handling uncaught exceptions &amp; rejections
+ Proper HTTP status code usage.
+
+
+
+
+                     Day 2
+ Revisit (only using async/await):
+o readFile, writeFile, appendFile.
+ Working with Directories:
+o readFile, writeFile, appendFile.
+o fs.readdir() – Read contents of a folder
+o fs.mkdir() – Create folder (with { recursive: true })
+o fs. rmdir() – Delete folder (or fs.rm() with { recursive: true })
+ File Management:
+o fs.rename() – Rename files
+o fs.unlink() – Delete files
+ fs.promises:
+o Use await fs.promises.readFile(...) pattern
+
+
+o Handle with try–catch blocks
+ Streams:
+o createReadStream() and createWriteStream()
+o Pipe one file to another
+o Read large files without loading fully in memory
+ Buffer &amp; Encoding Basics:
+ What is a buffer (concept)
+ Use case: binary data, encoding types (utf-8, hex, etc.)
+
+
+
+
+
+
+                        Day 3
+ What is a Process?
+ o Understanding the process object
+ o Using process.env, process.argv, process.exit()
+ What Happens When You Run node file.js?
+ o Behind-the-scenes overview
+ JS Engine &amp; Node Internals
+ o V8 engine + Node.js APIs
+ libuv, Thread Pool &amp; Event Loop
+ o How libuv manages I/O
+ o Role of the thread pool
+ o Event-driven architecture
+ Event Loop Execution Phases
+ o Timers, Pending Callbacks, Idle/Prepare, Poll, Check, Close
+ Microtask Queue vs Event Queue
+ o process.nextTick()
+ o Promise.then() and other microtasks
+ Child Processes
+ o spawn, exec, fork – run shell commands, handle CPU-bound tasks
+ Worker Threads
+ o When and why to use multithreading
+
+
+
+
+
+                     Day 4
+ Cookie vs Session – Concepts
+o Understand what cookies and sessions are.
+o Key differences between them.
+o Stateless (JWT) vs Stateful (express-session) authentication.
+ Using cookie-parser
+o Install and configure cookie-parser middleware.
+o Set cookies using res.cookie().
+o Read cookies using req.cookies.
+ JSON Web Token (JWT)
+o What is JWT: structure → Header, Payload, Signature.
+o Use case: Stateless authentication system.
+ Generate &amp; Verify JWT using jsonwebtoken
+o Create a JWT on login (with static credentials).
+
+o Protect routes by verifying the token.
+ Middleware for Protected Routes
+o Create middleware to check for valid JWT.
+o Deny access if token is missing or invalid.
+ JWT vs express-session
+o Differences in usage and storage.
+o Advantages and drawbacks of both approaches.
+ Store JWT in HTTP-only Cookies
+o Use secure cookies instead of Authorization headers.
+o Prevent client-side JavaScript from accessing the token.
+ Logout Functionality
+o Clear the JWT cookie.
+o Redirect the user to login on logout.
+ Using .env Files
+o Create a .env file (for variables like PORT, JWT_SECRET).
+o Use dotenv.config() to load it in your app.
+o Access values using process.env.
+
+
+
+
+
+
+
+                            Day 5
+ Real-Time Communication
+o What is WebSocket?
+o Introduction to Socket.IO and how it simplifies WebSocket handling.
+o Implement:
+o User join and leave events.
+o Real-time message broadcasting between clients.
+
+ Security &amp; Utility Middlewares
+o helmet: Add secure HTTP headers to protect against well-known web vulnerabilities.
+o cors: Enable Cross-Origin Resource Sharing (used when frontend and backend are separate).
+o express-rate-limit: Protect routes from brute-force attacks by limiting repeated requests.
+o compression: Reduce payload size using gzip compression to improve performance.
+o dotenv: Manage environment variables in a .env file securely.
+o morgan: Log HTTP requests to the console for debugging and tracking.
+ Additional Security Concepts
+o Brief overview of HTTPS and the importance of secure headers.
+o Understand the concept of CSRF (Cross-Site Request Forgery).
+o Introduction to input sanitization to prevent XSS and injection attacks.
+ Command-Line Interface (CLI) in Node
+o Use process.argv to accept input from the terminal.
+o Build a simple CLI tool (e.g., greet user or add numbers from terminal input).
+
+
+
+
+                              Day 6
+
+ File Uploads with Multer
+ Install and configure multer middleware
+ Accept single file upload using upload.single(&#39;file&#39;)
+ Store uploaded files in an uploads/ folder
+ Access file info via req.file
+ Add basic file type/size validation in controller
+
+
+ Build a backend-only project combining all major concepts from this week.
+o App Theme: School Connect
+A simplified school portal with two roles – admin and student.
+o Authentication
+Login page (using static credentials)
+Generate JWT on login and store in HTTP-only cookie
+Use middleware to protect all private routes
+o File Uploads
+Allow admin to upload school bulletins (PDFs or images)
+Save files using Multer and store filenames in an in-memory array
+Students can view the uploaded bulletins on /student/home
+o Live Chat with Socket.IO
+Admin and students can send/receive real-time messages
+Broadcast messages with sender name and time
+Show “user joined/left” status
+Use Middlewares
+ .env ,helmet, cors, compression ,express-rate-limit,morgan
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->

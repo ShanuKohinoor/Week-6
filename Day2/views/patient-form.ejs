@@ -1,0 +1,39 @@
+<!--                         Patient-form to add new patient -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient form</title>
+    <link rel="stylesheet" href="/style.css"> 
+
+</head>
+<body>
+<div>
+    <h1>Add a new Patient</h1>
+    <form action="/patients/add"  method="post"> 
+        <div>
+            <label>Name</label>
+            <input type="text" name="name" class="w-9 border" required> 
+            <br>
+            <br>
+
+            <label>Age</label>
+            <input type="number" name="age" class="w-9 border" required>
+            <br>
+            <br>
+
+            <label>Disease</label>
+            <input type="text" name="disease" class="w-9 border" required>
+            <br>
+            <br>
+
+            <button class="btn" type="submit">Add patient</button>
+
+
+        </div>
+    </form>
+</div>   
+</body>
+</html>

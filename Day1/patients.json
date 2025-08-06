@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Yuneeba",
+    "age": 32,
+    "disease": "Fever"
+  },
+  {
+    "id": 2,
+    "name": "Jumana",
+    "age": 33,
+    "disease": "Headache"
+  },
+  {
+    "id": 3,
+    "name": "Sadiya",
+    "age": 32,
+    "disease": "Stomachache"
+  }
+]
