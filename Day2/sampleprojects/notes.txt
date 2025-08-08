@@ -1,0 +1,3 @@
+Note 1: Learn CSS 
+Note 2: Learn HTML 
+Note 3: Learn Javascript 
