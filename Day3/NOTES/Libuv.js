@@ -159,6 +159,7 @@
 
 //   7. THREAD POOL:
 //            * The Thread Pool is a group of background worker threads (by default, 4 threads) inside libuv.
+//            * which means a team of worker threads (from libuv) handling heavy async tasks in the background.
 //            * It runs heavy or blocking tasks from the Work Queue without blocking the main JavaScript thread.
 //            * Tasks handled by the Thread Pool include:
 //               - File system operations (read, write, stat, etc.)
@@ -179,6 +180,7 @@
 
 //   9. SIGNAL HANDLING:
 //              * Signal Handling deals with operating system signals sent to our Node.js process.
+//              * Which means writing code that defines how our program should respond when it receives a signal.
 //              * libuv listens for these signals and informs the Event Loop when they occur.
 //              * Eg:-
 //                  - when we press ctrl +c in the terminal, the OS sends a SIGINT signal. .
@@ -186,16 +188,6 @@
 
 
 
-
-
-
-
-
-
-
-//                           Thread pool
-//                           -----------
-//  Thread Pool :- A team of worker threads (from libuv) handling heavy async tasks in the background.
 
 
 
@@ -261,7 +253,7 @@
 
 // Node.js has only one main thread to run javascript. If a task takes too long, the main thread will be blocked. Which results in blockage  or unresponsive of app.
 // Thread helps to solve this problem.
-// Threadpool helps by taking such heavy or blocking work from the main thread and work parallelly.
+// Thread pool helps by taking such heavy or blocking work from the main thread and work parallelly.
 // During this period main thread finishes its other works.
 // Once thread pool finishes its work, the results sent back to main thread through eventloop.
 
@@ -530,7 +522,7 @@
 
 
 
-  //                    Difference between threadpool and Worker thread
+  //                    Difference between thread pool and Worker thread
 
 // Both are multithreading mechanisms used in Node.js.
 // But, Thread pool is managed internally by libuv for handling asynchronous tasks like file I/O,

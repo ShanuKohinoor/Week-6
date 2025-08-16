@@ -72,7 +72,11 @@
 //                         Eg:- If your current working directory is /Users/shanu/projects.
 //                          The output will be  /Users/shanu/projects
 
+
+
+
 //                 Difference between __dirname and process.cwd() are :-
+
 //                   *  process.cwd() :-  where Node.js was started.
 //                        Eg:- console.log(process.cwd()); 
 //                               Output :- /Users/shanu
@@ -115,20 +119,7 @@
 //                              Output:-  /Users/shanu/projects
 //                            * It’s static — it depends only on the file’s location on disk, not on where you start the Node.js process.
 
-
-
-   
- 
-
-//                             |
-//                             | 
-//                             |
-//                             V
-
-
-
-
-//                         
+               
 
 //               *e) process.argv :- Command line arguments
 //                    Eg:- console.log("Arguments:", process.argv);
@@ -143,7 +134,7 @@
 //                                   ]
 //                   Eg 2:-  
                           console.log('Hello' + process.argv[2]);
-//                                  If we console.log (process.argv[2]), and give extra values in terminal like Fraza-Filza, output will be like:-
+//                                  If we console.log (process.argv[2]), and give extra values in terminal like Faraza-Filza, output will be like:-
            
 //                                    [
 //                                      'C:\\Program Files\\nodejs\\node.exe',
@@ -240,16 +231,6 @@
 
 
 
-//                             |
-//                             | 
-//                             |
-//                             V
-
-
-//                             |
-//                             | 
-//                             |
-//                             V
 
 
 
@@ -280,5 +261,3 @@
 
 
 
-//     Understanding the process object
-//     Using process.env, process.argv, process.exit()
