@@ -52,6 +52,8 @@
 
 
 
+
+
 //                               __________________
 //                              |                  |
 //                              |    Main thread   |
@@ -86,7 +88,50 @@
                                 
 
 
+
+
+
+
+
+
+//                                  HOW WORKER THREAD WORKS ??
+//                                  -----*-------*------*-----
+
+
+//                           Main thread creates a worker using new Worker().
+//                                               |
+//                                               |
+//                                               |
+//                                               v
+//                           It can send data to worker using worker.postMessage().
+//                                               |
+//                                               |
+//                                               |
+//                                               v
+//                          Worker thread receives this data via parentPort.on("message").
+//                                               |
+//                                               |
+//                                               |
+//                                               v
+//                          Worker processes the task (e.g., heavy calculation).
+//                                               |
+//                                               |
+//                                               |
+//                                               v
+//                          Worker sends back the result using parentPort.postMessage().
+//                                               |
+//                                               |
+//                                               |
+//                                               v
+//                          Main thread receives the result using worker.on("message").
+
+
+
+
+
+
 //                                  Worker pool:-
+//                                  ------*------
 
 //        * Instead of creating new worker for every task, can create worker pool.
 //        * We can reuse it.
