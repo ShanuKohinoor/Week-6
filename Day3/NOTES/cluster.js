@@ -41,3 +41,10 @@
 //   Monitor workers :- If a worker crashes, the master can restart it automatically.
 //   Distribute requests
 //   Central control  :- Can log or perform actions centrally in the master process.
+
+
+ // in cluster:-
+//  Main process is the primary process.
+//  child process is the worker process.
+
+// Need cluster module  and OS

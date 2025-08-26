@@ -25,10 +25,33 @@
 
 
 
+//               Node.js process                                        Child process
+//               ---------------                                        -------------
+//   * When we type node app.js in the terminal,                 * From already running Node.js process(parent),
+//      the OS(Windows/Linux/Mac) creates a new                     OS asked to create another new process..
+//      process.                                                    That is child process.
+
+//   * Inside that process, V8 engine,libuv,C++,                  * In this child process,it has its own V8 engine,
+//       node cores, global objects,node apis,                     memory,eventloop,node cores,global objects, etc
+//       eventloop etc are initialized.
+
+//                                                                 * Communication between parent and child through 
+//                                                                    IPC(Inter-Process Communication).
+//                                                                    - IPC is implemented via pipes(streams by default)
+//                                                                    - If we use child_process.fork(),Node will give
+//                                                                      built in IPC channel(child.send & child.on('message'))
+
+
+// WAYS TO CREATE CHILD PROCESS:-
+// ----*-------*-------*----*----
+//  We have 4 APIs to create child process.
+//    These 4 APIs are existed inside the child process module. We have to take that
+
 
 //  Main APIs:
 
 //    1. spawn() :- runs a command, streams output(watch live as it happens).
+
 
 //    2. exec() :- runs a command, buffers output(ask, wait, get all at once).
 
@@ -45,7 +68,9 @@
 //  Use:-
 //      * when expect large data output and want to process it in chunks.
 //      * If we need real-time streaming, like video processing or live logs.
-//  Does NOT buffer all output in memory.
+//      * In long running task(need more output).
+//      * If we want to run continously.
+//  Does Not buffer all output in memory.
 //  Real life comparison:- Its like starting a new machine to do a new job and watch it working live.
 //             * Imagine when we watch a live sports game on TV (streaming data).
 
@@ -54,6 +79,19 @@
 //             * This is like spawn(), where we get data continuously and can react to it immediately.
 
 
+//  spawn(cmd,args,options) 
+//           cmd,args and options are the arguments inside the spawn
+//         - When we get child process with spawn, a stream will create between process and child process to communicate.
+//              
+//                     Process                                 Child Process
+//                  ___________                                 ____________
+//                 |           |            Stream             |            |
+//                 |           |<----------------------------- |            |
+//                 |           |                               |            | 
+//                 |___________|                               |____________|
+
+// If we write console.log, it will directly goes to stdout.
+// If we write console.error, it will directly goes to stderr.
 
 
 
@@ -68,9 +106,30 @@
 //  Real life comparison:- This is like ask a helper to do a task/job, then wait for them to return with all results at once.
 //                * This works well if the report is short. But if the report is too long, carrying it all at once might be hard (like buffering too much data).
 
+//    exec(cmd,options,callback)
+//        * Runs inside shell. So there is a chance to attack.
+//        * Output will goes to buffer. And we will get it in a callback.
+//                  ___________                                 ____________
+//                 |           |                               |            |
+//                 |           |------------------------------ |            |------>Output
+//                 |           |                               |            |        |
+//                 |___________|                               |____________|        |
+//                                                                                   |
+//                                                                                   V
+//                                                                                 Buffer
+//                                                                                   |
+//                                                                                   |
+//                                                                                   |
+//                                                                                   v
+//                                                                                Callback
 
 
 
+//                              execFile
+//                              --------
+// Like exec. But not  shell through. Its like spawn directly OS.
+//    execFile(file,args,options,callback)
+//  * It is safe because it is not through shell.
 
 
 
@@ -86,6 +145,46 @@
 //      * When two Node.js programs want to talk to each other: They send messages to coordinate work.
 
 
+
+//  fork(modulepath,args,option)
+//  Only for node script.
+//  Other than stream we will get a communication channel too.
+//  It is like spawwn only.But in spawn we have only stream, here we have both stream and extra one communication channel. 
+//          * And here it is for node script alone unlike spawn
+
+//                    Process                                  Child Process
+//                  ___________                                 ____________
+//                 |           |            Stream             |            |
+//                 |           |<----------------------------- |            |        Send message:- send() 
+//                 |           |                               |            |        Recieve message:- on('message')
+//                 |___________|                               |____________|
+//                      |                                            |
+//                      |                                            |
+//                      |------------Communication Channel-----------|
+
+//  Then we can send message and recieve it with the help of communication channel.
+//       * So this helps in intercommunication
+
+
+
+
+
+
+
+
+
+//  Difference between child process APIs in simple:-
+// 1. spawn:- 
+//      * Work direct to OS.
+//      * When we want continous results.
+// 2. exec:- 
+//      * Work  through shell.
+//      * When we want single output.
+// 3. execFile:-
+//      * Work direct to OS.
+
+// 4. fork:-
+//      * Interchannel communication with the help of communication channel.
 
 
 //                         Child process v/s Worker thread
@@ -108,11 +207,10 @@
 //           *  Has own memory space           * Shared memory with parent.
 //           *  Useful for running             * Useful for CPU-intensive JS computation.
 //                non-Js tasks
-//           * Can run any executable program  * Run javascript only
+//           * Can run any external program  * Run javascript only
+//              like,python,git
 //           * Can crash independently         * Worker crash affect parent if unhandled
 //           * Lifecycle managed by OS         * Lifecycle managed within Node.js runtime
-
-
 
 
 

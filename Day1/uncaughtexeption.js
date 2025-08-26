@@ -8,15 +8,6 @@
 
 
 
-
-
-
-
-Ask ChatGPT
-
-
-
-
 // Process: An object inside Node.js which include all information and  control of that app
 
  //                                       object
