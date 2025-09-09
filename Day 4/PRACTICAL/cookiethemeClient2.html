@@ -1,0 +1,105 @@
+                            <!--CLIENT SIDE COOKIE-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        /*CSS*/
+        body  {
+            background-color: rgb(79, 168, 164);
+            font-style: italic;
+            display: grid;
+            place-items: center ;
+        }
+        body.dark {
+            background-color: blueviolet;
+
+        }
+        button {
+            background-color: brown;
+            border: 10px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            background-color: antiquewhite;
+        }
+    </style>
+</head>
+<body>
+    <!--HTML-->
+    <h1 id="Theme"> Theme light</h1>
+    <button id="myBtn">Button to dark</button>
+
+     <!--Javascript-->
+    <script>
+        const theme = document.getElementById('Theme')
+        const btn = document.getElementById('myBtn')
+
+        function getCookie(name){      // function named getCookie and (name) is the parameter we pass. Here it is theme.
+         const cookies = document.cookie.split('; ');     // document.cookie:- Bring all cookies as string. Eg:- "theme = dark; user = shanu" etc
+                                                         //  .split :-  Separates all cookies as array. Eg:- ["theme=dark", "user = shanu"]
+          for( const c of cookies){        // loop each cookie in the array.
+            const [key,value] = c.split('=') // [key,value]:- Destructuring(...). That means, array[0] = key and array[1]= value
+                                            // c:- String of one cookie. Eg:- "theme = dark"
+                                             // So, c.split:- splits it into ["theme","dark"]
+                                             // Now we have two elements in this array.ie, cookie name:-theme and cookie vale:- dark
+          if(key === name) return value;   // Check the current cookie name matches the name we are looking for. If yes, return the value of that .cookie
+          }
+          return null;           // If it doesn't matches return null.
+        
+        }    
+        
+
+        // Function to save/ update the theme of cookie whenever the user clicks the button
+          function setCookie(name,value,days=30){   // set default days for expiration for cookie.
+            const expire = days * 24 * 60 * 60   // converts days into seconds. Without this, the cookie expires when the browser closes (session cookie).
+             document.cookie = name + '=' + value + ';Max-Age='+ expire + ';Path=/;SameSite=Lax' // ;Path=/:- Cookie is valid on all pagges of site.
+          }
+
+
+      // Function to apply theme
+        function applyTheme(themeValue){
+            document.body.classList.toggle('dark',themeValue === 'dark');
+            theme.textContent = 'Theme: ' + themeValue     // Update the <h1> text to show the current theme
+            btn.textContent = 'Toggle to: '+ (themeValue === 'dark' ? 'light' : 'dark')     // Update the button text to show which theme will be applied on next click
+        }    
+
+        const saved = getCookie('theme') || 'light' // On page load, read the saved theme from the cookie
+                                                    // If cookie doesn't exist, default to 'light'
+        applyTheme(saved) // Apply the saved/default theme when the page loads
+
+
+        btn.onclick = () =>{
+            const currentCookie = getCookie('theme') || 'light' // Read current saved cookie with getCookie. If the cookie doesnt exit, default to light
+            const nextTheme = currentCookie === 'dark' ? 'light' : 'dark'      
+            setCookie('theme', nextTheme,30)  // saves newTheme in a cookie called theme.This ensures, if the user reloads the page,
+                                                    // the chosen theme is remembered.
+            applyTheme(nextTheme);
+        }
+    </script>
+</body>
+</html>
+
+<!-- In this we have to do:-
+
+  *  When the page loads,check the cookie exist:-
+      1) If the cookie says dark, apply dark mode.
+      2) If the cookie says light, apply light mode.
+      3) If no cookie, default to light mode.
+
+  *  When the button is clicked,switch theme and update the cookie.   
+
+ 
+
+
+
+
+
+
+-->

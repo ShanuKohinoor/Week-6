@@ -1,0 +1,40 @@
+
+<!--                                        loginSession.ejs-->
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+</head>
+<body>
+  <% if (user) { %>
+    <h2>Welcome <%= user.name %>!</h2>
+    <form action="/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form>
+  <% } else { %>
+    <h2>Login</h2>
+    <% if (error) { %>
+      <p style="color:red;"><%= error %></p>
+    <% } %>
+
+    <form action="/login" method="POST">
+      <label>Email:</label>
+      <input type="text" name="email" required />
+      <br />
+      <label>Password:</label>
+      <input type="password" name="password" required />
+      <br />
+      <button type="submit">Login</button>
+    </form>
+  <% } %>
+</body>
+</html>

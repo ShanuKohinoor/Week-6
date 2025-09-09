@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root { --bg:white; --fg: rgb(7, 6, 6);}
+        .dark { --bg:black; --fg:white;}
+        html,body {height:100%;}
+        body{
+            margin:0; display: grid; place-items:center;gap:12px;
+            background: var(--bg); color:var(--fg); font-family:system-ui,Arial,sans-serif;
+        }
+        button{ padding: 10 px 14 px; border-radius: 10 px;border: 1px solid white; cursor:pointer;}
+    </style>
+</head>
+<body>
+    <h1 id="title">Theme:light</h1>           <!--Display current theme-->
+    <button id="toggleBtn">Toggle to dark</button>  <!--Button to change theme-->
+  <script>
+
+    function getCookie(name){
+        const parts = document.cookie.split('; ');
+        for (const part of parts){
+            if (part.startsWith(name + '=')) return part.split('=') [1];
+        }
+         return null;
+    }
+    
+     function  setCookie(name,value,days=30) {
+        const maxAge = days * 24 * 60 * 60;
+        document.cookie = name + '=' + value + ';Max-Age='  + maxAge +';Path=/;SameSite= Lax';
+     }
+
+     const title = document.getElementById('title');
+     const btn = document.getElementById('toggleBtn')
+
+
+     function applyTheme(theme) {
+        document.body.classList.toggle('dark',theme === 'dark');
+        title.textContent = 'Theme: ' + theme;
+        btn.textContent = 'Toggle to ' + (theme === 'dark' ? 'light' : 'dark');
+     }
+
+     const saved = getCookie('theme') || 'light';
+     applyTheme(saved);
+
+     btn.onclick = () => {
+        const current = getCookie('theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        setCookie('theme',next,30);
+        applyTheme(next);
+     };
+  </script>
+    
+</body>
+</html>
