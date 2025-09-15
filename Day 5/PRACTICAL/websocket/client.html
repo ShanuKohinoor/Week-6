@@ -142,33 +142,83 @@ Step 5: Browser A disconnects
 
 
 
+                            CLIENT-SERVER COMMUNICATION FOR ALL CLIENTS(By broadcasting)
+                            -----------*-----------*-----------*-----------*------------
 
 
 
+Step 1: Browser A connects
+             (Browser A opens a WebSocket connection to the server (new WebSocket("ws://localhost:3000")).)
+               
+                 __________________          Handshake          __________________
+                |    Browser A     | ------------------------- |   WebSocket      |
+                |   (Client JS)    | <------------------------ |   Server         |
+                |__________________|                           |__________________|
+                        |
+                        |
+                        v
+             ws.addEventListener('open',()=>{ 
+                        |                                 
+                        | 'open' event triggers                 
+                        v                                        
+                 __________________
+                | Chat div shows   |
+                | "Connected to    |
+                | server"          |
+                |__________________|
 
+Step 2: Browser A sends a message
+      Browser A types "Hello" and clicks Send
+                       |
+                       |
+                       v
+         btn.addEventListener('click') triggers
+                       |
+                       |
+                       v
+                __________________
+               | Chat div shows   |
+               | 'You: Hello'     |  (local display)
+               |__________________|
+                      |
+                      |
+                      v
+               ws.send('Hello')      //  (Send to the server)
+                      |
+                      | 
+                      v
+Step 3: Server recieves the message from Browser A ('Hello')
+                      |
+                      | 
+                      v
+        console.log('Client says: Hello')
+                      |
+                      | 
+                      v
+       Server replies only to Browser A 
+                      | socket.send('Hello, I got your message')
+                      |
+                      V
+Step 4: Browser A receives server reply
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Step 3: Server broadcasts the message
+    ws.addEventListener('message') triggers in Browser A
+                      |
+                      | 
+                      v
+      Chat div shows: 'Hello, I got your message'
+                      |
+                      | 
+                      v
+Step 5: Server broadcasts the message
                __________________
               |   WebSocket      |
               |   Server         |
               |__________________|
+                      |
+                      |
+                      v
+          for(const client of wss.clients){               
+          client.send(msg.toString())                     
                       |
                       | Broadcasts "Hello" to all connected clients
                       V
