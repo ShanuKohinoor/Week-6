@@ -6,7 +6,9 @@
 
 
 // Callback:-  
-//     DEFINITION:- In Js and Nodejs,Callback is a function passed as an argument to another function. That second function calls it later, usually when an async task is done (like reading a file or waiting for time).
+//     DEFINITION:- In Js and Nodejs,Callback is a function passed as an argument to another function. 
+//        That second function calls it later, usually when an async task is done 
+//        (like reading a file or waiting for time).
 // Eg:-
 
 
@@ -86,7 +88,7 @@
 
 // To avoid callback hell:-
 //             * Use Promises    :- Refer promise.js
-//             * Use async/await  :- Refer asynchawait.js
+//             * Use async/await  :- Refer asyncawait.js
 //             * Break code into smaller named functions
 
 
@@ -134,6 +136,7 @@
 //         }       
 
 
+// If we create separate folder for txt files, we write code like this:-
 
 //       fs.readFile('./CallbackFiles/file1.txt','utf8',(err,data1)=>{    (path:- inside day1.js --> CallbackFiles(folder)--> file1.txt(subfolder))
 //         if (err) {

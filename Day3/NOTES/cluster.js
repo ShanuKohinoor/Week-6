@@ -48,3 +48,20 @@
 //  child process is the worker process.
 
 // Need cluster module  and OS
+
+
+
+
+
+
+// Comparison with real time example
+
+// Thread Pool: assistants inside the same kitchen chopping veggies quietly (for blocking tasks).
+
+// Worker Threads: assistant chefs inside same kitchen but doing heavy chopping / kneading.
+
+// Child Process: a separate kitchen with its own chef, communicates by passing ingredients.
+
+// Cluster: multiple kitchens working together to serve lots of customers.
+
+

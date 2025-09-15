@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="/socket.io/socket.io.js"></script>
+                                           <!--
+                                             Socket.IO client library
+                                              -->
+                                   
+</head>
+<body>
+    
+   <h2> Chat App</h2>
+   <!--Join box-->
+   <div>
+      <input  id="username" placeholder="Enter name">
+      <button id="joinBtn">Join</button>
+    <br>
+    <br>
+
+   </div>
+
+      <!--Messsage Input-->
+   <div>
+       <input id="msg" placeholder="Type a message">
+      <button id="sendBtn">Send</button>
+
+   </div>
+
+   <!--Chat box-->
+    <div id="chat" style="border:1px solid #ccc; height:200px; overflow:auto;"></div>
+    <br>
+
+<script>
+    const socket = io()   // connect to the server
+    const chat = document.getElementById('chat')
+
+  // Join button click
+    document.getElementById('joinBtn').addEventListener('click',()=>{
+          const userName = document.getElementById('username').value;
+          if (!userName) return alert('Please enter a name');
+          socket.emit('join',userName)    // send 'join' to the server
+    })
+
+
+    // Send button click
+
+    document.getElementById('sendBtn').addEventListener('click',()=>{
+        const text = document.getElementById('msg').value;
+        if(!text) return;
+        socket.emit('chat-message',text)
+    })
+    
+    // Welcome message  only for new user
+    socket.on('welcome', (data)=>{
+      const p = document.createElement('p')
+      p.textContent = `${data.message} ${data.username}`
+      chat.appendChild(p)
+    })
+
+    // User joined notification
+    socket.on('user-joined',(data)=>{
+        const p = document.createElement('p')
+        p.textContent = `${data.username} joined the chat`
+        chat.appendChild(p)
+
+    })
+
+    // Recieve messages from the server
+     socket.on('chat-message',(msg)=>{
+        const p = document.createElement('p')
+        p.textContent = ` ${msg.username} : ${msg.text}`
+        chat.appendChild(p)
+     })
+</script>
+      <!---->
+
+
+  
+
+</body>
+</html>

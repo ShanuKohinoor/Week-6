@@ -35,7 +35,7 @@
 //                 __________________________|___________________________
 //                |                                                      |   
 //                v                                                      V
-//            Cookies                                                Http Header
+//            Cookies                                                Http Header(Authorization)
 
 
 

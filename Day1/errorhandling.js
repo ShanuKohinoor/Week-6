@@ -8,7 +8,8 @@
 
 
 
-// Centralized Error Handling is instead of writing try–catch in every route, write one common error-handling middleware, which catches all errors and sends a proper response.
+// Centralized Error Handling is instead of writing try–catch in every route, write one common error-handling middleware,
+//    which catches all errors and sends a proper response.
 
 //  Eg:- 
       const express = require('express')
@@ -31,7 +32,7 @@
         console.log('Error',err.message);
 
         res.status(err.statuscode || 500 ).json ({   // err.statuscode:- Custom status code like 404, 400, 500
-                                                     // res.status().json():- 	Sends a clean JSON response to client
+                                                     // res.status().json():- Sends a clean JSON response to client
             success : false,  
             mesage : err.message || 'Internal server error'
         })

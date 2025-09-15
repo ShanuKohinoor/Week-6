@@ -39,9 +39,9 @@
 
 //                                   SIMILARITIES:- 
 //        * Both use same language. ie, javascript
-//        * Both support asynch functions like (callbacks,promises,asynch/await )
+//        * Both support async functions like (callbacks,promises,async/await )
 //        * Behaviour is same.
-//        * Concept of asynch function is same. But usage and tools are different in js and Nodejs.
+//        * Concept of async function is same. But usage and tools are different in js and Nodejs.
 
 
 

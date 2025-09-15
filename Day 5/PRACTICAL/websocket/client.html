@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSocket</title>
+</head>
+<body>
+  <h2> WebSocket </h2>
+
+  <input id="msgBox" type="text" placeholder="Type message" />
+  <button id="sendBtn">Send</button>
+
+  <div id="chat" style="margin-top: 20px; font-family:monospace;"></div>
+
+  <script>
+    // Connect to WebSocket server
+    const ws = new WebSocket("ws://localhost:3000");       // Handshake will happen with this
+
+    //  Accessing DOM elements
+    const msg = document.getElementById('msgBox')     // User type message in input box
+    const btn = document.getElementById('sendBtn')    // Send button of that message
+    const chat = document.getElementById('chat')      //  Display message 
+
+
+    // Handling Websocket events
+
+         // ws.addEventListener('open',()=>{                  // Open the channel. Connection is established
+         //    chat.innerHTML += 'Connected to server <br>'
+         // })
+
+    ws.onopen = () =>{                                          // we can use this instead of writing addEventListener
+                                                      // either like this or with addEventListener like above 
+       chat.innerHTML += 'Connected to server <br>'
+    }
+
+    // ws.addEventListener('message', (e) => {            
+                                                    // Listen for any message coming from the server
+                                                    // e :- event object (like an envelope from server)
+    //  chat.innerHTML += e.data + '<br>';              // e.data :- actual message text inside the envelope
+                                                    // Show message in this client's chat box
+    // })                                                  // This event trigger only when server sends a message.
+
+
+      ws.onmessage = (e)=>{
+        chat.innerHTML += e.data + '<br>'
+      }
+
+    btn.addEventListener('click',()=>{                //  When click the send button after user type message in msgBox,this event happens
+        const message = msg.value;                    //  Get typed message(Browser takes msg.value)
+        ws.send(message)                              //  Sends this msg.value to the server
+        chat.innerHTML += 'You : ' + message + '<br>' //  Browser adds 'You: message' in the window( shown user's own message in the chat)
+        msg.value = ''                                //  Input box is cleared
+    })
+ 
+
+
+
+  </script>
+</body>
+</html>
+<!--
+
+
+
+                            CLIENT-SERVER COMMUNICATION FOR A SINGLE CLIENT
+                            -----------*-----------*-----------*-----------
+
+
+Step 1: Browser A connects
+             (Browser A opens a WebSocket connection to the server (new WebSocket("ws://localhost:3000")).)
+               
+                 __________________          Handshake          __________________
+                |    Browser A     | ------------------------- |   WebSocket      |
+                |   (Client JS)    | <------------------------ |   Server         |
+                |__________________|                           |__________________|
+                        |
+                        |
+                        v
+             ws.addEventListener('open',()=>{ 
+                        |                                 
+                        | 'open' event triggers                 
+                        v                                        
+                 __________________
+                | Chat div shows   |
+                | "Connected to    |
+                | server"          |
+                |__________________|
+
+Step 2: Browser A sends a message
+      Browser A types "Hello" and clicks Send
+                       |
+                       |
+                       v
+         btn.addEventListener('click') triggers
+                       |
+                       |
+                       v
+                __________________
+               | Chat div shows   |
+               | 'You: Hello'     |  (local display)
+               |__________________|
+                      |
+                      |
+                      v
+               ws.send('Hello')      //  (Send to the server)
+                      |
+                      | 
+                      v
+Step 3: Server recieves the message from Browser A ('Hello')
+                      |
+                      | 
+                      v
+        console.log('Client says: Hello')
+                      |
+                      | 
+                      v
+       Server replies only to Browser A 
+                      | socket.send('Hello, I got your message')
+                      |
+                      V
+Step 4: Browser A receives server reply
+
+    ws.addEventListener('message') triggers in Browser A
+                      |
+                      | 
+                      v
+      Chat div shows: 'Hello, I got your message'
+                      |
+                      | 
+                      v
+Step 5: Browser A disconnects
+
+        socket.on('close') triggers on server
+                      |
+                      | 
+                      v
+        console.log('Client disconnected')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Step 3: Server broadcasts the message
+               __________________
+              |   WebSocket      |
+              |   Server         |
+              |__________________|
+                      |
+                      | Broadcasts "Hello" to all connected clients
+                      V
+Step 4: Browser B and C receives the message
+                      |
+                      |
+                      |
+                      | Server Broadcast 
+                      |--------------------------------------------
+                      |                                           |
+                      v                                           v
+              ___________________                          __________________
+             |   Browser B       |                        |   Browser C      |
+             | (Other clients)   |                        | (Other clients)  |
+             |___________________|                        |__________________|
+                     |                                             |
+                     | ws.addEventListener('message')              | ws.addEventListener('message')
+                     | triggers                                    | triggers
+                     v                                             v
+               __________________                            __________________
+              | Chat div shows   |                          | Chat div shows   |
+              | "Hello" from A   |                          | "Hello" from A   |
+              |__________________|                          |__________________|
+
+
+
+
+
+
+-->
