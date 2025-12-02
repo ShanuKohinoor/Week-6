@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 m-0 p-0 h-screen flex flex-col">
+
+<!--  Title and Logo -->
+<div class="w-full flex items-center justify-between px-8 py-3 bg-blue-100 shadow-md">
+    <div class="flex items-center gap-4"> 
+        <img src="/images/Springvale School Logo with Emblem Style.png" 
+             alt="School Logo" 
+             class="w-16 h-16 object-contain "> 
+          <h1 class="absolute left-1/2 transform -translate-x-1/2 text-3xl font-bold text-gray-800">
+             <%= title %>
+          </h1>  
+    </div>
+
+
+  <!-- Admin info & Logout -->
+  <div class="flex flex-col items-end gap-1">
+    <div class="flex items-center gap-2">
+      <i class="fa-solid fa-user-tie"></i>
+      <span class="font-semibold text-gray-700"><%= userName %></span>
+    </div>
+
+    <!--Current Date-->
+    <div id="currentDate" class="text-gray-600 text-sm"></div>
+    <!--Logout-->
+    <a href="/admin/logout" class="text-red-600 font-semibold hover:text-red-800 transition duration-300">
+      🔒 Logout
+    </a>
+  </div>
+
+</div>
+
+<div class="w-full flex justify-center items-center  gap-6 py-2 pl-35 mt-9">
+
+      <!-- Add new student Button -->
+        <a href="/admin/add-student">
+         <button class="px-6 py-3 bg-gradient-to-r from-[#005f73] to-[#0a9396]  text-white font-bold rounded-lg hover:from-[#005f73] hover:to-[#0e7c7b]        hover:-translate-y-1 hover:shadow-[0_6px_15px_rgba(0,0,0,0.3)] transition duration-300 block mx-auto text-center">
+
+          + Add New Student
+         </button>
+      </a>
+
+      <!-- Search bar -->
+  <div class="relative w-1/3">
+    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+    <input 
+      type="search" 
+      id="searchInput" 
+      placeholder="Search a student name......" 
+      class="w-full p-2 pl-10 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0a9396]"
+    />
+  </div>
+  
+</div>
+
+    
+    <!-- Student Table -->
+<div class="flex-1 overflow-auto w-full px-6 ">
+   <table class="w-full border-collapse border mb-10 border-gray-700 text-center"> 
+        <thead>
+            <tr>
+              <td colspan="8" class="py-4"> 
+                <h2 class="text-3xl font-semibold text-gray-700 mt-1 ">Student Details</h2>
+             </td>
+            </tr>
+
+          <tr class="bg-[#0a9396] text-white">
+            <th class="border border-gray-700 px-4 py-2">ID</th>
+            <th class="border border-gray-700 px-4 py-2">Name</th>
+            <th class="border border-gray-700 px-4 py-2">Email</th>
+            <th class="border border-gray-700 px-4 py-2">Year</th>
+            <th class="border border-gray-700 px-4 py-2">Division</th>
+            <th class="border border-gray-700 px-4 py-2">Parent Mobile</th>
+            <th class="border border-gray-700 px-4 py-2">Attendance</th>
+            <th class="border border-gray-700 px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="studentsTableBody">
+          <% if(studentsList.length > 0) { %>
+            <% studentsList.forEach(student => { %>
+              <tr class="hover:bg-gray-200">
+                <td class="border border-gray-700 px-4 py-2"><%= student.id %></td>
+                <td class="border border-gray-700 px-4 py-2 student-name"><%= student.name %></td>
+                <td class="border border-gray-700 px-4 py-2"><%= student.email %></td>
+                <td class="border border-gray-700 px-4 py-2"><%= student.year %></td>
+                <td class="border border-gray-700 px-4 py-2"><%= student.division %></td>
+                <td class="border border-gray-700 px-4 py-2"><%= student.parentMobile %></td>
+                <td class="border border-gray-700 px-4 py-2"><%= student.attendance %> %</td>
+                <td class="border border-gray-700 px-4 py-2">
+
+                  <!--Edit and Delete Buttons-->
+                    <div class="flex justify-center items-center gap-6">
+    <!-- Edit Button  -->
+    <a href="/admin/edit-student/<%= student.id %>" class="relative group text-black hover:text-blue-800">
+      <i class="fa-solid fa-pen" title="Edit"></i>
+      </span>
+    </a>
+
+    <!-- Delete Button  -->
+    <a href="/admin/delete-student/<%= student.id %>" class="relative group text-black hover:text-blue-800">
+      <i class="fa-solid fa-trash text-red-600" title="Delete"></i>
+      
+      </span>
+    </a>
+
+  </div>
+</td>
+              </tr>
+            <% }) %>
+          <% } %>
+
+      <!--No matching result notification Display-->
+            <tr id="noResultRow" style="display: none;">
+    <td colspan="9" class="py-4 text-red-600 font-semibold">No matching student found.</td>
+  </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+<!--Bulletin and Back button-->
+<div class="flex justify-center items-center gap-6 mt-2 mb-6">
+
+  <!-- Bulletin Button -->
+  <a href="/admin/bulletin"
+     class="flex items-center justify-center px-4 py-2 bg-[#005f73] text-white font-bold rounded-lg   hover:from-[#005f73] hover:to-[#0e7c7b] hover:-translate-y-1 hover:shadow-lg transition duration-300 gap-3">
+      <i class="fa-solid fa-bullhorn"></i> Bulletin
+    
+  </a>
+
+  <!-- Back Button  -->
+  <a href="/" class="px-3 py-2 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-semibold rounded-lg hover:from-[#005f73] hover:to-[#0e7c7b] hover:-translate-y-1 hover:shadow-lg transition duration-300">
+    ← Back to Welcome page
+
+  </a>
+</div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const rows = document.querySelectorAll('#studentsTableBody tr');
+  const noResultRow = document.getElementById('noResultRow');
+
+  searchInput.addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    let matchFound = false;
+
+    rows.forEach(row => {
+      const nameBox = row.querySelector('.student-name');
+      
+      if (nameBox) {
+        const text = nameBox.textContent.toLowerCase();
+
+        if (text.includes(filter)) {
+          row.style.display = "";
+          matchFound = true;
+        } else {
+          row.style.display = "none";
+        }
+      }
+    });
+   
+
+    // Show no matches message
+    if (filter !== "" && !matchFound) {
+      noResultRow.style.display = "";
+    } else {
+      noResultRow.style.display = "none";
+    }
+  });
+
+  // Show today's date
+  const dateElement = document.getElementById('currentDate');
+  const today = new Date();
+
+
+  dateElement.textContent = today.toLocaleDateString(); 
+
+
+</script>
+
+</body>
+</html>

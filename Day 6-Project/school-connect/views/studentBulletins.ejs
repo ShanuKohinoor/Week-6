@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Bulletins</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+</head>
+
+<body class="bg-gradient-to-br from-[#0a9396] via-[#94d2bd] to-[#e0fbfc] text-gray-900 min-h-screen flex items-center justify-center">
+
+  <!-- Container -->
+  <div class="bg-white/70 shadow-lg backdrop-blur-md rounded-2xl p-8 w-full max-w-4xl border border-[#0a9396]">
+   
+   <div class="flex justify-between">
+    <img src="/images/Springvale School Logo with Emblem Style.png" 
+             alt="School Logo" 
+             class="w-16 h-16 object-contain ">  <!-- fixed size-->
+
+
+    <!-- Title -->
+    <h1 class="text-3xl font-bold text-center  text-[#0a9396] drop-shadow-md mb-6 tracking-wide">
+         Welcome, <%= student.name %> School Bulletins
+    </h1>
+  
+
+   </div>
+    <!-- Bulletins Section -->
+    <div class="mt-4">
+      <% if (bulletins && bulletins.length > 0) { %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+          <% bulletins.forEach(bulletin => { %>
+            <div class="relative bg-white/50 p-4 rounded-xl shadow-md backdrop-blur-sm border border-[#94d2bd] text-center hover:scale-105 transition transform">
+
+              <!-- Bulletin Image -->
+              <img src="/uploads/<%= bulletin.filename %>" 
+                   alt="Bulletin" 
+                   class="rounded-lg shadow-md w-full h-36 object-cover mb-2 cursor-pointer"
+              />
+
+              <!-- View Button -->
+              <button onclick="openModal('/uploads/<%= bulletin.filename %>')"
+                      class="mt-2 w-15 bg-[#0a9396] text-white py-1 rounded-lg hover:bg-[#005f73] transition">
+                View
+              </button>
+              
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="text-center text-[#005f73] font-medium mt-6">No bulletins available at the moment.</p>
+      <% } %>
+    </div>
+
+    <!-- Back Link -->
+    <div class="text-center mt-6">
+      <a href="/student/home/<%= student.id %>" 
+         class="inline-block w-64 py-2 bg-gradient-to-r from-[#94d2bd] to-[#0a9396] text-white font-bold rounded-lg transition duration-300 hover:from-[#0e7c7b] hover:to-[#005f73] hover:-translate-y-1">
+        ← Back to Home
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50">
+    <span class="absolute top-4 right-8 text-white text-3xl cursor-pointer" onclick="closeModal()">&times;</span>
+    <img id="modal-img" src="" alt="Bulletin" class="max-h-[90%] max-w-[90%] rounded-lg shadow-lg">
+  </div>
+
+  <script>
+    function openModal(src) {
+      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('modal-img').src = src;
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+
+    // Close modal on clicking outside the image
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target.id === 'modal') closeModal();
+    });
+  </script>
+
+</body>
+</html>

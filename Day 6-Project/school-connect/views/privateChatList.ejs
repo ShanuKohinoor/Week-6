@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Private Chat List</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd] text-white font-sans flex flex-col items-center p-6 min-h-screen ">
+
+  <!-- Header -->
+  <div class="relative py-2 px-4 mt-5 w-full max-w-2xl rounded-2xl text-xl bg-white/10 backdrop-blur-md border border-white/30 drop-shadow-lg flex items-center justify-between mx-auto">
+    <h1 class="text-4xl font-bold text-white">Edumate</h1>
+
+
+  <div class="relative w-1/3">
+    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+    <input 
+      type="search" 
+      id="searchBox" 
+      placeholder="Search..." 
+      class="w-full p-2 pl-10 border border-gray-400 bg-gray-100 text-black rounded-lg "
+    />
+  </div>
+
+    <!-- Back Button -->
+    <a href="/student/home/<%= currentSender.id %>"
+      class="bg-[#0a9396] hover:bg-[#005f73] border border-white px-4 py-1 rounded-full font-semibold transition">
+      Back
+    </a>
+  </div>
+
+
+  <!-- Students List -->
+  <div class="w-full max-w-2xl mt-6 flex flex-col gap-4">
+    <% students.forEach(student => { %>
+<a href="/student/chat/<%= currentSender.id %>-<%= student.id %>"
+   class=" studentItem flex items-center gap-4 p-4 bg-[#94d2bd]/40 hover:bg-[#0a9396] rounded-2xl transition transform hover:scale-105">
+        <!-- Avatar -->
+        <div class="bg-[#0a9396] w-12 h-12 flex items-center justify-center rounded-full border border-white text-white font-bold text-3xl">
+          <%= student.name.charAt(0).toUpperCase() %>
+        </div>
+        <!-- Name -->
+        <span class="studentName text-3xl font-semibold text-white"><%= student.name %></span>
+      </a>
+    <% }) %>
+  </div>
+
+<div id="Nomatches" style="display:none;" class="text-red-800 text-3xl font-bold">No matching students found</div>
+
+
+  <script>
+    const searchBox = document.getElementById('searchBox')
+    const studentItems = document.querySelectorAll('.studentItem')
+    const noMatches = document.getElementById('Nomatches')
+
+    searchBox.addEventListener('input',function(){
+      const filter = this.value.toLowerCase()   // search item in lowercase(case insensitive)
+      let itemFound = false;                  // track if student found
+
+      studentItems.forEach(item=>{
+        const nameSpan = item.querySelector('.studentName')  // find out the name
+        const nameText = nameSpan.textContent.toLowerCase()         // convert the nameto lowercase
+
+
+        if (nameText.includes(filter)){
+          item.style.display= ""      // show matching student
+          itemFound = true;
+        } else {
+          item.style.display = "none";
+        }
+      }) 
+
+
+      // show or hide no match message
+    if (itemFound ){
+      noMatches.style.display = "none"
+    } else {
+      noMatches.style.display = "block"
+    }
+
+
+    })
+  </script>
+
+</body>
+</html>

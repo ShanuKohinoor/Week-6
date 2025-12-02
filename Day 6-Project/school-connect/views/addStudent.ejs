@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd] m-0 p-0 overflow-hidden">
+
+  <div class="bg-white/95 w-full max-w-md p-6 sm:p-8 rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.3)] text-center">
+
+    <!-- Title -->
+    <h1 class="text-2xl sm:text-3xl font-bold mb-6"><%= title %></h1>
+
+    <!-- Student Form -->
+    <form id="studentForm" action="/admin/add-student" method="POST" class="flex flex-col items-center w-full">
+      
+      <input type="text" id="name" name="name" placeholder="Name"
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+      <p id="nameFeedback" class="text-red-600 text-left w-72 text-xs mb-1"></p>
+
+      <input type="email" id="email" name="email" placeholder="Email"
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+      <p id="emailFeedback" class="text-red-600 text-left w-72 text-xs mb-1"></p>
+
+      <input type="text" id="year" name="year" placeholder="Year"
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+
+      <input type="text" id="division" name="division" placeholder="Division"
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+
+      <input type="text" id="parentMobile" name="parentMobile" placeholder="Parent Mobile"
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+      <p id="parentFeedback" class="text-red-600 text-left w-72 text-xs mb-1"></p>
+
+      <input type="number" id="attendance" name="attendance" placeholder="Attendance %"
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+
+      <button type="submit"
+              class="w-72 py-2 mt-3 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold rounded-lg cursor-pointer transition duration-300 hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-0.5 hover:shadow-md">
+        Add Student
+      </button>
+
+      <p id="feedBack" class="text-red-600 text-left w-72 text-xs mt-1"></p>
+
+      <a href="/admin/home"
+         class="w-72 mt-3 py-2 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold rounded-lg text-center transition duration-300 hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-0.5 hover:shadow-md block mx-auto">
+        ← Back to Dashboard
+      </a>
+    </form>
+  </div>
+
+  <!-- Form Validation Script -->
+  <script>
+    const form = document.querySelector('#studentForm');
+    const nameInput = document.querySelector('#name');
+    const emailInput = document.querySelector('#email');
+    const yearInput = document.querySelector('#year');
+    const divisionInput = document.querySelector('#division');
+    const parentInput = document.querySelector('#parentMobile');
+    const feedback = document.querySelector('#feedBack');
+
+    const nameFeedback = document.getElementById('nameFeedback');
+    const emailFeedback = document.getElementById('emailFeedback');
+    const parentFeedback = document.getElementById('parentFeedback');
+
+    // Regex Patterns
+    const namePattern = /^[A-Za-z]+\s+[A-Za-z]+(?:\s+[A-Za-z]+)?$/
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)?$/
+    const parentPattern = /^\d{10}$/;
+
+    function nameCheck() {
+      const name = nameInput.value.trim();
+      if(!namePattern.test(name)){
+        nameFeedback.textContent = 'Please enter full name (First and Last)';
+      } else {
+        nameFeedback.textContent = '';
+      }
+      return namePattern.test(name);
+    }
+
+    function emailCheck() {
+      const email = emailInput.value.trim();
+      if(!emailPattern.test(email)){
+        emailFeedback.textContent = 'Please enter a valid email';
+      } else {
+        emailFeedback.textContent = '';
+      }
+      return emailPattern.test(email);
+    }
+
+    function parentCheck() {
+      const parent = parentInput.value.trim();
+      if(!parentPattern.test(parent)){
+        parentFeedback.textContent = 'Parent number must be 10 digits';
+      } else {
+        parentFeedback.textContent = '';
+      }
+      return parentPattern.test(parent);
+    }
+
+    form.addEventListener('submit', (e) => {
+      const allOk = nameCheck() && emailCheck() && parentCheck();
+      if(!allOk){
+        e.preventDefault();
+        feedback.textContent = 'Please fix errors before submitting';
+      } else {
+        feedback.textContent = '';
+      }
+    });
+
+    nameInput.addEventListener('blur', nameCheck);
+    emailInput.addEventListener('blur', emailCheck);
+    parentInput.addEventListener('input', parentCheck);
+  </script>
+</body>
+</html>

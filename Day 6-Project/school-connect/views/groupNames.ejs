@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Groups</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd]  min-h-screen flex flex-col items-center p-6">
+  
+  <div class="relative  p-2 py-2 px-4 mt-8 mb-6 w-full max-w-2xl rounded-2xl text-xl bg-white/10 backdrop-blur-md border border-white/30 drop-shadow-lg flex items-center justify-between mx-auto">
+    <h1 class="text-4xl  mt-4 font-bold text-white mb-6">SchoolTalk</h1>
+    <div class="relative w-22 ">
+      <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+      <input type="search" id="searchBox" placeholder="Search a group..." class="w-full p-2 pl-10 border border-gray-400 bg-gray-100  text-black rounded-lg "/>
+    </div>
+        <!-- Back Button -->
+    <a href="/student/home/<%= student.id %>"
+      class="bg-[#0a9396] hover:bg-[#005f73]  border border-white px-4 py-1 rounded-full font-semibold transition">
+      Back
+    </a>
+
+  </div>
+  
+</div>
+
+  <div class=" flex flex-col gap-4 w-full max-w-2xl">
+      <% groups.forEach(group => { %>
+
+      <a href="/student/groupChat/<%= group.id %>" 
+        class="groupName flex items-center gap-4 px-4 py-2 w-full bg-[#0a9396] text-white rounded-3xl border border-white text-3xl font-semibold hover:bg-[#005f73] transition">
+
+          <div class="bg-[#005f73] w-12 h-12 flex items-center justify-center rounded-full border border-white text-white font-bold text-3xl">
+            <%= group.name.charAt(0).toUpperCase() %>
+          </div>
+
+          <span><%= group.name %></span>
+      </a>
+
+      <% }) %>
+  </div>
+
+  <div
+    style="display: none;"  class="text-red-800 text-4xl font-bold" id="Nomatches">No matching group found
+  </div>
+
+
+  <script>
+    const searchBox = document.getElementById('searchBox')
+    const groupNames = document.querySelectorAll('.groupName')
+    const noMatches = document.getElementById('Nomatches')
+
+
+   searchBox.addEventListener('input',function(){
+    const filter = this.value.toLowerCase()
+    let itemFound = false;
+
+        groupNames.forEach(name => {
+          const text = name.textContent.toLowerCase();
+          if (text.includes(filter)) {
+            name.style.display = "";
+            itemFound = true;
+          } else {
+            name.style.display = "none";
+          }
+        });
+
+        if (itemFound){
+          noMatches.style.display = "none"
+        } else {
+          noMatches.style.display = "block"
+        }
+   })
+
+  </script>
+
+</body>
+</html>

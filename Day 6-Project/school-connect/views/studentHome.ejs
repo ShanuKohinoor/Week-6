@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd]">
+
+  <!-- Student Container -->
+  <div class="bg-white/70 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.25)] p-8 w-full max-w-lg mx-4 h-auto sm:h-[90vh] flex flex-col justify-between">
+           
+    <!-- Student Info & Logout -->
+    <div class="flex justify-between items-center mb-4">
+    <img src="/images/Springvale School Logo with Emblem Style.png" 
+             alt="School Logo" 
+             class="w-16 h-16 object-contain ">  <!-- fixed size-->
+
+    <div class="flex flex-col items-end gap-2">
+
+      <div id="currentDate" class="text-gray-600 text-sm"></div>
+
+      <a href="/student/logout" class="text-red-600 font-semibold hover:text-red-800 transition duration-300">
+        🔒 Logout
+      </a>
+    </div>
+
+    </div>
+
+    <!-- Profile Icon & Welcome -->
+    <div class="flex flex-col items-center mb-6">
+      <div class="bg-[#0a9396] text-white w-14 h-14 flex items-center justify-center rounded-full text-4xl font-bold shadow-md">
+        <%= student.name.charAt(0).toUpperCase() %>
+      </div>
+      <h1 class="text-2xl font-bold mt-4">Welcome, <%= student.name %>!</h1>
+    </div>
+
+    <!-- Student Details -->
+    <div class="bg-[#e0f7f4] rounded-xl p-5 text-left  text-[#005f73]  leading-6 overflow-y-auto max-h-[55vh]">
+      
+      <div class="flex justify-between items-center mb-1">
+          <div><span class="font-bold">Name:</span> <%= student.name %></div>
+            <a href="/student/editStudent"  class="px-3 py-1 bg-[#0a9396] text-white rounded-full font-semibold 
+              hover:bg-[#0e7c7b] transition duration-300 shadow-md text-sm"> ✏ Edit
+           </a>
+      </div>
+      <div class="mb-1"><span class="font-bold">Email:</span> <%= student.email %></div>
+      <div class="mb-1"><span class="font-bold">Year:</span> <%= student.year %></div>
+      <div class="mb-1"><span class="font-bold">Division:</span> <%= student.division %></div>
+      <div class="mb-1"><span class="font-bold">Parent Mobile:</span> <%= student.parentMobile %></div>
+      <div><span class="font-bold">Attendance:</span> <%= student.attendance %> %</div>
+    </div>
+
+<!-- Buttons -->
+<div class="mt-6">
+
+  <!-- First Row Buttons -->
+  <div class="flex gap-3 justify-center">
+    
+    <!-- View Bulletin -->
+    <a href="/student/bulletins"
+       class="px-5 py-2 bg-gradient-to-r from-[#094d4f] to-[#0a9396] text-white rounded-xl font-semibold 
+              hover:from-[#0a9396] hover:to-[#0e7c7b] transition duration-300 shadow-md">
+      View Bulletin
+    </a>
+
+    <!-- Private Chat -->
+    <a href="/student/privateChatList"
+       class="px-5 py-2 bg-gradient-to-r from-[#094d4f] to-[#0a9396] text-white rounded-xl font-semibold 
+              hover:from-[#0a9396] hover:to-[#0e7c7b] transition duration-300 shadow-md">
+      Private Chat
+    </a>
+
+    <!-- Group Chat -->
+    <a href="/student/group-list"
+       class="px-5 py-2 bg-gradient-to-r from-[#094d4f] to-[#0a9396] text-white rounded-xl font-semibold 
+              hover:from-[#0a9396] hover:to-[#0e7c7b] transition duration-300 shadow-md">
+      Group Chat
+    </a>
+
+  </div>
+
+  <!-- Back Button -->
+  <div class="mt-4 flex justify-center">
+
+    <a href="/"
+       class="px-6 py-2 bg-gradient-to-r from-[#094d4f] to-[#0a9396] text-white rounded-xl font-semibold 
+              hover:from-[#0a9396] hover:to-[#0e7c7b] transition duration-300 shadow-md">
+              ← Back to home page
+
+    </a>
+  </div>
+
+</div>
+
+<script>
+  const currentDate= document.getElementById('currentDate')
+  const today = new Date()
+
+  currentDate.textContent = today.toLocaleDateString()
+</script>
+</body>
+</html>

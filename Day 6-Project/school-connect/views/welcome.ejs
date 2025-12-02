@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="m-0 p-0">
+
+      <div class="absolute inset-0 -z-10">
+        <img 
+            src="/images/Springvale School Logo with Emblem Style.png" 
+            class="w-full h-screen object-cover backdrop-blur-md opacity-30"
+            alt="Background Image"
+        >
+    </div>
+
+    <!--  Soft dark overlay  -->
+    <div class="absolute inset-0 bg-black/20 -z-10"></div>
+
+
+        <div class="absolute inset-0 bg-[#0a99a8]/40 -z-10"></div>
+
+  <!--Welcome-->
+<div class="flex flex-col justify-center items-center h-screen text-white text-center overflow-hidden">
+
+    <h3 class="text-[3.5rem] text-[#005f73] mb-10 font-bold tracking-[2px] drop-shadow-[3px_3px_12px_rgba(0,0,0,0.5)]">
+      <%= title %>
+    </h3>
+    <p class="text-[#005f73] mb-8 text-4xl leading-relaxed">
+      Your gateway to everything school — explore updates, announcements, and bulletins, and connect with classmates through personal or group chats.<br>
+    </p>
+    <p class="text-gray-800 text-3xl mb-4"> Stay engaged, informed, and inspired every day. </p>
+    <p class="text-white text-2xl mb-6 mt-5">Access your dashboard by logging in below</p>
+
+  <!--Links-->
+    <div class="flex flex-wrap justify-center gap-10">
+      <!-- Admin Link -->
+      <a href="/admin/login"
+         class="flex flex-col justify-center items-center w-[180px] h-[180px] bg-[#0a9396] rounded-2xl font-bold text-[1.3rem] text-white shadow-[0_6px_15px_rgba(0,0,0,0.4)] transition duration-300 hover:bg-white/25 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.6)]">
+        <i class="fa-solid fa-user-shield text-[3.5rem] mb-4"></i>
+        Admin
+      </a>
+
+      <!-- Student Link -->
+      <a href="/student/login"
+         class="flex flex-col justify-center items-center w-[180px] h-[180px]  bg-[#0a9396] rounded-2xl font-bold text-[1.3rem] text-white shadow-[0_6px_15px_rgba(0,0,0,0.4)] transition duration-300 hover:bg-white/25 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.6)]">
+        <i class="fa-solid fa-user-graduate text-[3.5rem] mb-4"></i>
+        Student
+      </a>
+    </div>
+
+    <!-- Footer Text -->
+    <p class="text-black mt-8 text-sm">© 2025 School Connect. Designed by Shanu Shahanas Kohinoor.</p>
+
+  </div>
+</body>
+</html>

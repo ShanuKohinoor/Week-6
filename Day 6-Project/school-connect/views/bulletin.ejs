@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Bulletin</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+</head>
+
+<body class="bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd] text-white min-h-screen flex items-center justify-center">
+
+  <!-- Container -->
+  <div class="bg-white/10 shadow-2xl backdrop-blur-md rounded-2xl p-10 w-full max-w-3xl border border-[#0a9396]">
+    <div class="flex justify-between">
+          <img src="/images/Springvale School Logo with Emblem Style.png" 
+             alt="School Logo" 
+             class="w-16 h-16 object-contain mb-6">  <!-- fixed size-->
+    
+                 <!-- Title -->
+    <h1 class="text-3xl font-extrabold text-center text-white px-30 drop-shadow-lg mb-8 tracking-wide">
+        <i class="fa-solid fa-bullhorn"></i> Upload School Bulletin
+    </h1>
+
+        <!-- Back button -->
+      <a href="/admin/home"
+      class="w-40 h-12 text-center bg-gradient-to-r from-[#0a9396] to-[#005f73] hover:from-[#005f73] hover:to-[#94d2bd] text-white font-bold mt-4 py-2 px-4 rounded-lg shadow-lg transition-all duration-500">
+        ← Back
+      </a>
+
+
+    </div>
+
+    <!-- Upload Form -->
+    <form action="/admin/fileUpload" method="POST" enctype="multipart/form-data" class="space-y-6">
+      <div>
+        <input 
+          type="file" 
+          name="file" 
+          required 
+          class="block w-full text-gray-800 bg-white/80 border border-[#94d2bd] rounded-lg p-2
+                 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
+                 file:text-sm file:font-semibold file:bg-[#0a9396] file:text-white hover:file:bg-[#005f73] cursor-pointer transition duration-300"
+        />
+      </div>
+
+      <!-- Upload Button -->
+     <div class=" text-center">
+      <button type="submit" class="w-72 bg-gradient-to-r from-[#0a9396] to-[#005f73] hover:from-[#005f73] hover:to-[#94d2bd] text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all duration-500">
+        Upload
+      </button>
+
+     </div>  
+    </form>
+
+    <!-- Message -->
+    <p id="successMessage" class="text-center font-medium mt-4 text-[#d9f8f3] animate-pulse">
+      <%= message %>
+    </p>
+      
+    <!--Separation line-->
+     <div class="w-full max-w-4xl mx-auto my-8 border-t-2 border-[#0a9396]"></div>
+
+
+        <!-- Uploaded Images Section -->
+    <div class="mt-10">
+      <h2 class="text-2xl font-semibold text-center mb-6"> Uploaded Bulletins</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <% if (bulletins && bulletins.length > 0) { %>
+          <% bulletins.forEach(bulletin => { %>
+            <div class="bg-white/10 p-4 rounded-xl shadow-md backdrop-blur-md border border-[#0a9396] text-center">
+              <img src="/uploads/<%= bulletin.filename %>" 
+                   alt="Bulletin" 
+                   class="rounded-lg shadow-lg w-full h-40 object-cover mb-2" />
+
+            <!-- Cross delete button -->
+            <a href="/admin/delete-bulletin/<%= bulletin.filename %>" 
+              class="absolute top-2 right-2 text-white bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700">
+              &times;
+            </a>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p class="text-center text-[#d9f8f3]">No bulletins uploaded yet.</p>
+        <% } %>
+      </div>
+    </div>
+
+  </div> 
+
+  <script>
+    // Hide success message after 10 seconds
+    const messageSuccess = document.getElementById('successMessage')
+
+    if(messageSuccess && messageSuccess.textContent.trim() !== ""){
+      setTimeout(()=>{
+        messageSuccess.style.display= 'none';
+      },10000)
+
+      }
+    
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat - <%= receiver.name %></title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd] text-white font-sans flex flex-col h-screen m-0 p-0">
+
+  <!-- Header -->
+  <div
+    class="w-full flex items-center justify-between px-6 py-3 bg-white/10 backdrop-blur-md border-b border-white/30 sticky top-0 z-10">
+    <!-- Avatar and Name -->
+    <div class="flex items-center gap-4">
+      <div
+        class="bg-[#0a9396] w-10 h-10 flex items-center justify-center rounded-full border border-white text-white font-bold text-lg">
+        <%= receiver.name.charAt(0).toUpperCase() %>
+      </div>
+      <h1 class="text-xl font-bold text-white">
+        <%= receiver.name %>
+      </h1>
+    </div>
+
+    <!-- Back Button -->
+    <a href="/student/privateChatList"
+      class="bg-[#0a9396] hover:bg-[#005f73] border border-white px-4 py-1 rounded-full font-semibold transition">
+      Back
+    </a>
+  </div>
+
+  <!-- Chat Box -->
+  <div id="chatBox" class="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-2">
+  </div>
+
+  <!-- Input Area -->
+  <div
+    class="w-full px-6 py-3 flex gap-2 border-t border-white/30 bg-white/10 backdrop-blur-md sticky bottom-0 z-10">
+    <input type="text" id="msgInput" placeholder="Type a message..."
+      class="flex-1 p-2 rounded-l-2xl border border-white/30 text-black bg-white focus:outline-none focus:ring-2 focus:ring-[#0a9396]" />
+    <button onclick="sendMessage()"
+      class="bg-[#005f73] hover:bg-[#0a9396] px-4 py-2 rounded-r-2xl border border-white font-semibold transition">
+      Send
+    </button>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const input = document.getElementById("msgInput");
+    const socket = io();
+
+    const room = "<%= privateRoom %>";
+    const senderId = Number("<%= sender.id %>");
+    const receiverId = Number("<%= receiver.id %>");
+
+    // Join private room
+    socket.emit("joinPrivateRoom", room, () => {
+      console.log("Joined room successfully!");
+    });
+
+    // Load old messages
+    socket.on("oldMessages", (messages) => {
+      messages.forEach(msg => {
+        const type = msg.fromSenderId === senderId ? "self" : "other";
+        appendMessage(msg.message, type);
+      });
+    });
+
+    // Send a new message
+    function sendMessage() {
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      socket.emit("privateMessage", {
+        room,
+        fromSenderId: senderId,
+        toReceiverId: receiverId,
+        message: msg
+      });
+
+      input.value = "";
+    }
+
+    // Receive new messages
+    socket.on("receivePrivateMessage", ({ fromSenderId, message }) => {
+      const type = Number(fromSenderId) === senderId ? "self" : "other";
+      appendMessage(message, type);
+    });
+
+    // Append messages to chat box
+    function appendMessage(message, type) {
+      const p = document.createElement("p");
+      p.textContent = message;
+      p.className = `mb-1 rounded max-w-[70%] text-lg p-3 break-words 
+        ${type === "self" 
+          ? "bg-white font-bold text-[#005f73] self-end ml-auto"   // self message
+          : "bg-[#005f73] text-white self-start"}`;               // receiver message
+      chatBox.appendChild(p);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Enter key to send message
+    input.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+
+  </script>
+
+</body>
+
+</html>
