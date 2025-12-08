@@ -5,7 +5,6 @@ const path = require('path');
 
 const filePath = path.join(__dirname,'../data/student.json');
 const {loadStudents} = require('../utils/loadStudents');
-const { json } = require('stream/consumers');
 const bulletinsPath = path.join(__dirname,'../data/bulletins.json');
 
 // Load students from JSON(students.json)
@@ -34,22 +33,19 @@ const postStudent = (req, res, next) => {
   try {
     // const { username, email, password } = req.body;
 
-    const username = req.body.username.trim();
     const email = req.body.email.trim();
     const password = req.body.password.trim();
     const studentPassword = '45678'; 
     const students = loadStudents();
 
-    const student = students.find(s => s.name.trim().toLowerCase() === username.toLowerCase() &&
-        s.email.trim().toLowerCase() === email.toLowerCase()
-    );
+    const student = students.find(s => s.email.trim().toLowerCase() === email.toLowerCase());
 
-    if (!student) throw new NotFoundError('Invalid username or email');
+    if (!student) throw new NotFoundError('Invalid email');
 
     if (password !== studentPassword) throw new BadRequest('Incorrect password');
 
     // Create JWT token
-    const token = createStudentToken({ id: student.id, username: student.name }); // createStudentToken from adminToken.js
+    const token = createStudentToken({ id: student.id, username: student.name, role:'student' }); // createStudentToken from adminToken.js
 
     // Store token named studentToken in cookie
     res.cookie('studentToken', token, {
@@ -89,16 +85,20 @@ const getStudentHome = (req, res, next) => {
   
 const getEditStudentForm = (req, res, next) => {
   try {
+
     const students = loadStudents();
-    const studentId = req.student.id; // from JWT verifyStudent middleware
+    const studentId = Number(req.student.id); // from JWT verifyStudent middleware
 
-    const student = students.find(s => s.id === studentId);
-    if (!student) throw new Error('Student Not Found');
+    const student = students.find((s) => Number(s.id) === Number(req.student.id));
 
-    res.render('editForm', { title: 'Edit Profile', student });
-  } catch (err) {
-    next(err);
-  }
+    if (!student) {
+      return next(new NotFoundError('Student not found'));
+    }
+        res.render('editForm', { title: 'Edit Profile', student });
+
+      } catch (err) {
+        next(err);
+      }
 };
 
 
@@ -109,27 +109,32 @@ const getEditStudentForm = (req, res, next) => {
 const postStudentEdit = (req, res, next) => {
   try {
     const students = loadStudents();
-    const studentId = req.student.id;
+    const studentId = Number(req.student.id);
+    if (!studentId) return next(new Error('Invalid Student ID'));
 
-    // find the student object 
     const student = students.find(s => s.id === studentId);
-    if (!student) throw new Error("Student Not Found");
+    if (!student) return next(new Error('Student Not Found'));
 
-    const { name, email } = req.body;
-    if (!name || !email) throw new Error("Name and Email required");
+    const { name, email, parentMobile } = req.body;
+    if (!name || !email || !parentMobile) {
+      return next(new Error('Name, Email, and Parent Mobile are required'));
+    }
 
-    // update 
+
     student.name = name;
     student.email = email;
+    student.parentMobile = parentMobile;
+
+    
 
     writeFile(students);
+
     res.redirect('/student/home/' + studentId);
 
   } catch (error) {
     next(error);
   }
 };
-
 
 //                         TO VIEW BULLETIN
 
@@ -189,7 +194,7 @@ const getPrivateChat = (req, res, next) => {
 
     const privateRoom = [sender.id, receiver.id].sort((a, b) => a - b).join('_');
 
-    res.render('chat', { sender, receiver, privateRoom });
+    res.render('privateChat', { sender, receiver, privateRoom });
   } catch (err) {
     next(err);
   }

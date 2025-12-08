@@ -13,41 +13,51 @@
     <!-- Title -->
     <h1 class="text-2xl sm:text-3xl font-bold mb-6"><%= title %></h1>
 
+       <% if(error){ %>
+          <p id="duplicateFeedBack" class="text-red-800"><%=error %></p>
+      <% } %> 
+
     <!-- Student Form -->
-    <form id="studentForm" action="/admin/add-student" method="POST" class="flex flex-col items-center w-full">
+    <form id="studentForm" action="/admin/add-student" method="POST" class="flex flex-col w-full">
       
       <input type="text" id="name" name="name" placeholder="Name"
-             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
-      <p id="nameFeedback" class="text-red-600 text-left w-72 text-xs mb-1"></p>
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" >
+      <p id="nameFeedback" class="text-red-600 text-left ml-0 mb-3 text-xs"></p>
 
       <input type="email" id="email" name="email" placeholder="Email"
-             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
-      <p id="emailFeedback" class="text-red-600 text-left w-72 text-xs mb-1"></p>
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]">
+      <p id="emailFeedback" class="text-red-600 text-left  text-xs mb-1 "></p>
 
-      <input type="text" id="year" name="year" placeholder="Year"
-             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+      <input type="number" id="year" name="year" placeholder="Year" min="1" max="12"
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" >
+      <p id="yearFeedBack" class="text-red-600 text-left w-72 text-xs mb-2"></p>
 
-      <input type="text" id="division" name="division" placeholder="Division"
-             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+      <input type="text" id="division" name="division" placeholder="Division" 
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" >
+      <p id="divisionFeedBack" class="text-red-600 text-left text-xs mb-2"></p>
 
       <input type="text" id="parentMobile" name="parentMobile" placeholder="Parent Mobile"
-             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" >
       <p id="parentFeedback" class="text-red-600 text-left w-72 text-xs mb-1"></p>
 
-      <input type="number" id="attendance" name="attendance" placeholder="Attendance %"
-             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+      <input type="number" id="attendance" name="attendance" placeholder="Attendance %" min='0' max='100' 
+             class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396] " >
+      <p id="attendanceFeedBack" class="text-red-600 text-left text-red-600 text-xs"></p>
 
-      <button type="submit"
-              class="w-72 py-2 mt-3 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold rounded-lg cursor-pointer transition duration-300 hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-0.5 hover:shadow-md">
-        Add Student
-      </button>
+        <div class="flex flex-col items-center">
+          <button type="submit"
+                  class="w-72 py-2 mt-3 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold rounded-lg text-center cursor-pointer transition duration-300 hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-0.5 hover:shadow-md">
+            Add Student
+          </button>
 
-      <p id="feedBack" class="text-red-600 text-left w-72 text-xs mt-1"></p>
+          <p id="feedBack" class="text-red-600 text-left w-72 text-xs mb-3 mt-1"></p>
 
-      <a href="/admin/home"
-         class="w-72 mt-3 py-2 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold rounded-lg text-center transition duration-300 hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-0.5 hover:shadow-md block mx-auto">
-        ← Back to Dashboard
-      </a>
+          <a href="/admin/home"
+            class="w-72 mt-3 py-2 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold rounded-lg text-center transition duration-300 hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-0.5 hover:shadow-md block mx-auto">
+            ← Back to Dashboard
+          </a>
+
+        </div>     
     </form>
   </div>
 
@@ -59,60 +69,147 @@
     const yearInput = document.querySelector('#year');
     const divisionInput = document.querySelector('#division');
     const parentInput = document.querySelector('#parentMobile');
+    const attendanceInput = document.querySelector('#attendance')
     const feedback = document.querySelector('#feedBack');
+    const duplicateFeedBack = document.getElementById('duplicateFeedBack')
+
+
 
     const nameFeedback = document.getElementById('nameFeedback');
     const emailFeedback = document.getElementById('emailFeedback');
+    const divisionFeedBack = document.getElementById('divisionFeedBack');
     const parentFeedback = document.getElementById('parentFeedback');
+    const attendanceFeedBack = document.getElementById('attendanceFeedBack');
+
 
     // Regex Patterns
     const namePattern = /^[A-Za-z]+\s+[A-Za-z]+(?:\s+[A-Za-z]+)?$/
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)?$/
+    const divisionPattern = /^[A-Za-z]$/
     const parentPattern = /^\d{10}$/;
+
 
     function nameCheck() {
       const name = nameInput.value.trim();
-      if(!namePattern.test(name)){
-        nameFeedback.textContent = 'Please enter full name (First and Last)';
+      if(!name){
+        nameFeedback.textContent ='Name is required'
+        return false
+      } else if(!namePattern.test(name)){
+        nameFeedback.textContent = 'Please enter full name (Name should be in Alphabet)';
+        return false
       } else {
         nameFeedback.textContent = '';
+        return true
       }
       return namePattern.test(name);
     }
 
     function emailCheck() {
       const email = emailInput.value.trim();
-      if(!emailPattern.test(email)){
+      if(!email){
+        emailFeedback.textContent = 'Email is required'
+        return false
+      }
+      else if(!emailPattern.test(email)){
         emailFeedback.textContent = 'Please enter a valid email';
+        return false
       } else {
         emailFeedback.textContent = '';
+        return true
       }
       return emailPattern.test(email);
     }
 
+    function yearCheck(){
+      const year = yearInput.value.trim();
+      if(!year){
+        yearFeedBack.textContent = 'Year of student is required'
+        return false
+      } else {
+         yearFeedBack.textContent = ''
+         return true
+      }
+    }
+     
+
+    function divisionCheck(){
+      const division = divisionInput.value.trim();
+      if(!division){
+        divisionFeedBack.textContent= 'Division of student is required'
+        return false
+
+      } else if(!divisionPattern.test(division)) {
+        divisionFeedBack.textContent= 'Division of student must be one alphabet'
+        return false
+
+        } else{
+        divisionFeedBack.textContent = ''
+        return true
+      }
+    }
+
+
     function parentCheck() {
       const parent = parentInput.value.trim();
+      if(!parent){
+        parentFeedback.textContent = 'Parent phone number is required'
+        return false
+      }
       if(!parentPattern.test(parent)){
         parentFeedback.textContent = 'Parent number must be 10 digits';
+        return false
       } else {
         parentFeedback.textContent = '';
+        return true
       }
       return parentPattern.test(parent);
     }
 
+
+function attendanceCheck() {
+  const attendance = parseInt(attendanceInput.value.trim(), 10);
+
+  if (attendanceInput.value.trim() === '' || Number.isNaN(attendance)) {
+    attendanceFeedBack.textContent = 'Attendance of Student is required';
+    return false;
+  } else if (attendance < 0 || attendance > 100) {
+    attendanceFeedBack.textContent = 'Attendance percentage must be between 0 and 100';
+    return false;
+  } else {
+    attendanceFeedBack.textContent = '';
+    return true;
+  }
+}
+
     form.addEventListener('submit', (e) => {
-      const allOk = nameCheck() && emailCheck() && parentCheck();
+      const allOk = nameCheck() && emailCheck() && yearCheck() && divisionCheck() && parentCheck() && attendanceCheck();
       if(!allOk){
-        e.preventDefault();
-        feedback.textContent = 'Please fix errors before submitting';
-      } else {
-        feedback.textContent = '';
+        e.preventDefault()
+        feedback.textContent='Must fill all fields'
+       } else{
+        feedback.textContent = ''; 
       }
     });
 
     nameInput.addEventListener('blur', nameCheck);
     emailInput.addEventListener('blur', emailCheck);
+    yearInput.addEventListener('input', yearCheck);
+    divisionInput.addEventListener('input', divisionCheck);
     parentInput.addEventListener('input', parentCheck);
+    attendanceInput.addEventListener('input',attendanceCheck)
+
+    form.addEventListener('input',()=>{
+      feedback.textContent = ''
+      duplicateFeedBack.textContent = ''
+    })
+  
+    window.addEventListener('load',()=>{
+      if(duplicateFeedBack){
+        setTimeout(()=>{
+        duplicateFeedBack.textContent  = ''
+      },5000)
+      }
+    })
   </script>
 </body>
 </html>

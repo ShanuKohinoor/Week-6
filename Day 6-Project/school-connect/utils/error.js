@@ -8,6 +8,13 @@
        }
 
 
+ // conflict error
+        class conflictError extends AppError {
+        constructor(message){
+            super(message,409)
+        }
+       }
+
 
 
  //      custom NotFoundError
@@ -42,4 +49,4 @@
         }
     }
 
-      module.exports = {AppError,NotFoundError,BadRequest,UnAuthorized, Duplicates}
+      module.exports = {AppError,conflictError,NotFoundError,BadRequest,UnAuthorized, Duplicates}

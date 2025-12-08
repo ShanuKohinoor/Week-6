@@ -18,21 +18,20 @@
     <h1 class="text-[24px] text-[#0a9396] font-bold mb-10"><%= title %></h1>
     <i class="fa-solid fa-user-shield text-black text-5xl mb-5"></i>
     <!-- Login Form -->
-    <form action="/admin/login" method="post" class="flex flex-col">
+    <form action="/admin/login" method="post" class="flex flex-col" >
 
-      <!-- Username -->
+     <!--Email-->
       <div class="relative my-3">
         <i class="fa-solid fa-user absolute left-3 top-1/2 -translate-y-1/2 text-[#0a9396]"></i>
-        <input type="text" name="username" placeholder="Username"
-               class="w-full p-3 pl-10 rounded-[10px] border border-[#0a9396] text-[16px] focus:outline-none" required>
+        <input type="email" name="email" placeholder="Enter an email" autocomplete="new-email"
+               class="w-full p-3 pl-10 rounded-[10px] border border-[#0a9396] text-[16px] focus:outline-none " required>
       </div>
-
 
 
       <!-- Password -->
      <div class="relative my-3">
       <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-[#0a9396]"></i>
-      <input type="password" name="password" placeholder="Enter Password"
+      <input type="password" name="password" placeholder="Enter Password" autocomplete="new-password"
              class="w-full p-3 pl-10 rounded-[10px] border border-[#0a9396] text-[16px] focus:outline-none" required>
      </div>
       <!-- Submit Button -->
@@ -59,7 +58,7 @@
 
   <div id="credBox" class="mt-3 p-4 bg-white rounded-lg shadow-lg hidden w-64">
     <h3 class="font-bold text-[#0a9396] mb-2">Admin Credentials</h3>
-    <p>Username: <span class="font-semibold">Admin</span></p>
+    <p>User Email: <span class="font-semibold">admin@gmail.com</span></p>
     <p>Password: <span class="font-semibold">12345</span></p>
   </div>
 </div>

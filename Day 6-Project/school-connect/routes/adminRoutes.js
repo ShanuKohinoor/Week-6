@@ -27,7 +27,7 @@ const fs = require('fs')
         }
 
     })
-    const uploader =multer({storage});  //multer instance 
+    const uploader = multer({storage});  //multer instance 
 
 
 
@@ -58,14 +58,14 @@ router.get('/home',verifyAdmin,getadminHome)
 router.get('/add-student',verifyAdmin,getAddStudent)
 router.post('/add-student',verifyAdmin,postAddStudent)
 
-
 // Edit single student
 router.get('/edit-student/:id',verifyAdmin,getEditform)
 router.post('/edit-student/:id',verifyAdmin,postEditform)
 
+
+
 //Delete singlestudent
  router.get('/delete-student/:id',verifyAdmin,deleteStudent);
-
 
 // Logout Admin page
  router.get('/logout',verifyAdmin,logOutAdmin)

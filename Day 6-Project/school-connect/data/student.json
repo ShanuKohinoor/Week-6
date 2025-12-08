@@ -3,16 +3,16 @@
     "id": 7703467,
     "name": "Mohamed Shan Pullani",
     "email": "shan@gmail.com",
-    "parentMobile": "2345567333",
     "attendance": "99",
     "year": "9",
-    "division": "r"
+    "division": "r",
+    "parentMobile": "9666666888"
   },
   {
     "id": 7703420,
-    "name": "Shanu Shahanas ",
+    "name": "Shanu Shahanas",
     "email": "shahanas@gmail.com",
-    "parentMobile": "2345567333",
+    "parentMobile": "9345567999",
     "attendance": "99",
     "year": "9",
     "division": "r"
@@ -21,7 +21,7 @@
     "id": 5475076,
     "name": "Faraza Pullani",
     "email": "faraza@gmail.com",
-    "parentMobile": "2345678997",
+    "parentMobile": "9345678997",
     "attendance": "99",
     "year": "1",
     "division": "B"
@@ -32,7 +32,7 @@
     "email": "filza@gmail.com",
     "year": "6",
     "division": "w",
-    "parentMobile": "2345666656",
+    "parentMobile": "7345666656",
     "attendance": "99"
   },
   {
@@ -40,7 +40,7 @@
     "name": "Fenza Pullani ",
     "email": "fenza@gmail.com",
     "year": "4",
-    "division": "r",
+    "division": "u",
     "parentMobile": "7592839895",
     "attendance": "99"
   },
@@ -90,39 +90,12 @@
     "attendance": "98"
   },
   {
-    "id": 7912812,
-    "name": "mohamed shan pullani",
-    "email": "shan@gmail.com",
-    "year": "4",
-    "division": "4",
-    "parentMobile": "3333333333",
-    "attendance": "99"
-  },
-  {
-    "id": 3341487,
-    "name": "fg k",
-    "email": "gh@gmail.com",
-    "year": "4",
-    "division": "r",
-    "parentMobile": "9999999999",
-    "attendance": "90"
-  },
-  {
-    "id": 4322466,
-    "name": "Mohamed Shan Pull",
-    "email": "shanp@gmail.com",
-    "year": "3",
-    "division": "8",
-    "parentMobile": "0909202777",
-    "attendance": "99"
-  },
-  {
-    "id": 4642158,
-    "name": "Mohamed Shan Pull",
-    "email": "shanp@gmail.com",
-    "year": "3",
-    "division": "8",
-    "parentMobile": "0909202777",
+    "id": 2045247,
+    "name": "Shareefa Mammed",
+    "email": "shareefaV@gmail.com",
+    "year": "7",
+    "division": "A",
+    "parentMobile": "9777777779",
     "attendance": "99"
   }
 ]

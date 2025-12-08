@@ -20,24 +20,27 @@
 
       <input type="text" id="name" name="name" value="<%= student.name %>" placeholder="Name"
              class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]">
-      <p id="nameFeedback" class="text-red-600 text-left w-full text-xs mb-1"></p>
+      <p id="nameFeedBack" class="text-red-600 text-left w-full text-xs mb-1"></p>
 
       <input type="email" id="email" name="email" value="<%= student.email %>" placeholder="Email"
              class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]">
-      <p id="emailFeedback" class="text-red-600 text-left w-full text-xs mb-1"></p>
+      <p id="emailFeedBack" class="text-red-600 text-left w-full text-xs mb-1"></p>
 
       <input type="text" id="year" name="year" value="<%= student.year %>" placeholder="Year of the Student"
              class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]">
+       <p id="yearFeedBack" class="text-red-600 text-left text-xs mb-1 w-full"></p>
 
       <input type="text" id="division" name="division" value="<%= student.division %>" placeholder="Division"
              class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]">
+      <p id="divisionFeedBack" class="text-red-600 text-left text-xs mb-1 w-full"></p>
 
       <input type="text" id="parentMobile" name="parentMobile" value="<%= student.parentMobile %>" placeholder="Parent Mobile"
              class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]">
-      <p id="parentFeedback" class="text-red-600 text-left w-full text-xs mb-1"></p>
+      <p id="parentFeedBack" class="text-red-600 text-left w-full text-xs mb-1"></p>
 
-      <input type="number" id="attendance" name="attendance" value="<%= student.attendance %>" placeholder="Attendance"
+     <input type="number" id="attendance" name="attendance" value="<%= student.attendance %>" placeholder="Attendance" min="0" max="100"
              class="w-full p-2 my-1 rounded-lg border border-[#0a9396] text-sm focus:outline-none focus:ring-2 focus:ring-[#0a9396]">
+      <p id="attendanceFeedBack" class="text-red-600 text-left text-xs mb-1 w-full"></p>
 
       <!-- Submit Button -->
       <button type="submit"
@@ -61,49 +64,136 @@
    const form = document.querySelector('#studentForm')
    const nameInput = document.querySelector('#name')
    const emailInput = document.querySelector('#email')
+   const yearInput = document.getElementById('year')
+   const divisionInput = document.getElementById('division')
    const parentInput = document.querySelector('#parentMobile')
+   const attendanceInput = document.getElementById('attendance')
    const feedback = document.querySelector('#feedBack')
 
-   const nameFeedback = document.getElementById('nameFeedback')
-   const emailFeedback = document.getElementById('emailFeedback')
-   const parentFeedback = document.getElementById('parentFeedback')
+   const nameFeedBack = document.getElementById('nameFeedBack')
+   const emailFeedBack = document.getElementById('emailFeedBack')
+   const yearFeedBack = document.getElementById('yearFeedBack')
+   const divisionFeedBack = document.getElementById('divisionFeedBack')
+   const parentFeedBack = document.getElementById('parentFeedBack')
+   const attendanceFeedBack = document.getElementById('attendanceFeedBack')
 
    const namePattern = /^[A-Za-z]+(?:\s+[A-Za-z]+)+$/;
    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)?$/
+   const yearPattern =/^\d+$/;
+   const divisionPattern = /^[A-Za-z]+$/
    const parentPattern = /^\d{10}$/
+   const attendancePattern = /^(100|[1-9]?\d)$/; 
+
 
    function nameCheck() {
      const name = nameInput.value.trim();
-     nameFeedback.textContent = namePattern.test(name) ? '' : 'Incorrect name';
-     return namePattern.test(name);
+     if(!name){
+      nameFeedBack.textContent = 'Name is required'
+      return false;
+     } else if(!namePattern.test(name)){
+       nameFeedBack.textContent =  'Incorrect name';
+       return false
+     } else{
+      nameFeedBack.textContent = ''
+     return true
+     }
    }
 
    function emailCheck() {
      const email = emailInput.value.trim();
-     emailFeedback.textContent = emailPattern.test(email) ? '' : 'Please enter a valid email';
-     return emailPattern.test(email);
+     if(!email){
+      emailFeedBack.textContent = 'Email is required'
+      return false;
+     } else if(!emailPattern.test(email)) {
+      emailFeedBack.textContent = 'Please enter a valid email';
+      return false
+     } else {
+      emailFeedBack.textContent = ''
+      return true;
+     }
    }
 
+
+   function yearCheck() {
+    const year = yearInput.value.trim()
+    if (!year){
+      yearFeedBack.textContent='Year of student is required'
+      return false;
+    } else if(!yearPattern.test(year)){
+      yearFeedBack.textContent = 'Year of Student must be a number'
+      return false
+    } else {
+      yearFeedBack.textContent = ''
+      return true;
+    }
+   }
+
+
+   function divisionCheck(){
+    const division = divisionInput.value.trim();
+    if(!division){
+      divisionFeedBack.textContent ='Division of Student is required'
+      return false
+    } else if (!divisionPattern.test(division)){
+      divisionFeedBack.textContent = 'Division of Student must be an alphabet'
+      return false;
+      } else {
+        divisionFeedBack.textContent = ''
+        return true;
+      }
+    }
+   
 
    function parentCheck() {
      const parent = parentInput.value.trim();
-     parentFeedback.textContent = parentPattern.test(parent) ? '' : 'Mobile number must be 10 digits';
-     return parentPattern.test(parent);
+     if(!parent){
+      parentFeedBack.textContent = 'Parent Mobile number is required'
+      return false
+     } else if (!parentPattern.test(parent)){
+     parentFeedBack.textContent =  'Mobile number must be 10 digits';
+     return false
+     } else { 
+      parentFeedBack.textContent = ''
+      return true;
+     }
    }
+
+function attendanceCheck() {
+  const attendance = parseInt(attendanceInput.value.trim(), 10);
+
+  if (attendanceInput.value.trim() === '' || Number.isNaN(attendance)) {
+    attendanceFeedBack.textContent = 'Attendance of Student is required';
+    return false;
+  } else if (attendance < 0 || attendance > 100) {
+    attendanceFeedBack.textContent = 'Attendance percentage must be between 0 and 100';
+    return false;
+  } else {
+    attendanceFeedBack.textContent = '';
+    return true;
+  }
+}
+
 
    nameInput.addEventListener('blur', nameCheck)
    emailInput.addEventListener('blur', emailCheck)
+   yearInput.addEventListener('input',yearCheck)
+   divisionInput.addEventListener('input',divisionCheck)
    parentInput.addEventListener('input', parentCheck)
+   attendanceInput.addEventListener('input',attendanceCheck)
+
 
    form.addEventListener('submit', (e) => {
-     const allOk = nameCheck() && emailCheck() && parentCheck()
+     const allOk = nameCheck() && emailCheck() && yearCheck() && divisionCheck() && parentCheck() && attendanceCheck()
      if(!allOk){
        e.preventDefault()
        feedback.textContent = ' Please correct the errors above'
      } else {
-       feedback.textContent = 'All ok, Form submitting...'
+       feedback.textContent = ''
      }
    })
+  form.addEventListener('input',()=>{
+    feedback.textContent = ''
+  })
   </script>
 </body>
 </html>

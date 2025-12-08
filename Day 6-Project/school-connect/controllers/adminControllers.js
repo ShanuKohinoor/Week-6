@@ -1,9 +1,10 @@
-const {NotFoundError,UnAuthorized} = require('../utils/error')
+const {NotFoundError,UnAuthorized,conflictError} = require('../utils/error')
 
 const fs = require('fs')
 const path = require('path')
 const { createAdminToken } = require('../utils/adminToken')
 const {loadStudents} = require('../utils/loadStudents')
+const { error } = require('console')
 
 // Json file path
 const filePath = path.join(__dirname,'../data/student.json')
@@ -29,10 +30,10 @@ const getAdmin =(req,res)=>{
 // To post Admin login page(Generate JWT token here)
 const postAdmin= (req,res,next)=>{
   // const { username,password} = req.body;
-     const username = req.body.username.trim();
+     const userEmail = req.body.email.trim();
      const password = req.body.password.trim();
 
-  if (username === 'Admin' && password === '12345'){
+  if (userEmail === 'admin@gmail.com' && password === '12345'){
 
     const token = createAdminToken({ id: 1, username: 'Admin'}) 
                                                      // can also write {(id:1, username)}..use username from req.body
@@ -54,6 +55,7 @@ const postAdmin= (req,res,next)=>{
 
 //                      HOME PAGE
 
+// Get Admin home
 const getadminHome = (req,res)=>{
   const studentsList = loadStudents() // get all students
   res.render('adminHome',{title: 'Admin DashBoard',userName:'Admin',studentsList})
@@ -61,13 +63,17 @@ const getadminHome = (req,res)=>{
 
 // Show add student form
 const getAddStudent = (req,res)=>{
-  res.render('addStudent',{title:'Add new Student'})
+  res.render('addStudent',{title:'Add new Student',error:''})  
 }
 
 // Post add student form
 const postAddStudent = (req, res, next) => {
   try {
     const { name, email, year, division, parentMobile, attendance } = req.body;
+        if(!name || !email || !year || !division || !parentMobile || !attendance){
+      return res.render('addStudent', { title: 'Add new Student', error: 'All fields are required' });
+    }
+
     const students = loadStudents();      // Read existing student from student.json
 
     const newStudent = {
@@ -80,6 +86,18 @@ const postAddStudent = (req, res, next) => {
       attendance
     };
 
+   // Check duplicate (student already exist or not)
+    const duplicateName = students.some(
+      s => s.name.trim().toLowerCase() === name.trim().toLowerCase()
+    );
+
+    const duplicateEmail = students.some(s=>s.email.trim().toLowerCase() === email.trim().toLowerCase())
+      
+    if(duplicateName || duplicateEmail){
+      return res.render('addStudent', { title: 'Add new Student', error: 'Student Name or Email already exists' });
+    }
+
+   // if there is no duplicates add new student
     students.push(newStudent);      // Add new students to the list (temporary store)
     writeFile(students);            // Permanent store in the file(student.json). Save updated students
 
@@ -93,7 +111,7 @@ const postAddStudent = (req, res, next) => {
 // shows the edit form
  const getEditform = (req,res,next)=>{
   try{
-    const studentId = parseInt(req.params.id)
+    const studentId = Number(req.params.id)
     const students= loadStudents();
     const student = students.find(s=>s.id === studentId)
     if(!student){
@@ -112,17 +130,18 @@ const postAddStudent = (req, res, next) => {
       
       const {name,email,year,division,parentMobile,attendance} = req.body;
       const students = loadStudents();
-      const studentId = parseInt(req.params.id)
+      const studentId = Number(req.params.id)
       const student = students.find(s=>s.id === studentId)
+      if(!student)
+        return next(new NotFoundError('student not found'))
 
-      if (student){
         student.name = name;
         student.email = email;
         student.year= year;
         student.division = division;
         student.parentMobile = parentMobile;
         student.attendance = attendance
-      }
+      
       writeFile(students)
       res.render('studentProfile', {title:'Student profile',student})
 
@@ -130,18 +149,16 @@ const postAddStudent = (req, res, next) => {
 
 
 // Delete student profile 
-  const deleteStudent = (req, res) => {
-      const studentId = Number(req.params.id);
-      let students = loadStudents();
+const deleteStudent =(req,res,next)=>{
+  const studentId = Number(req.params.id)
+  const students = loadStudents()
+  const updatedStudents = students.filter(s=>s.id !== studentId)
 
-    // Remove student by filtering
-     deletedStudent = students.filter(student => student.id !== studentId);
-
-     writeFile(deletedStudent); // Save updated list
-     res.redirect('/admin/home');
-  };
-
-
+  if(updatedStudents.length === students.length){
+   return next(new NotFoundError('Student with this ID is not existing'))
+  } writeFile(updatedStudents);
+  res.redirect('/admin/home')
+}
 
 //                      BULLETIN
 

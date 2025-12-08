@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-const {NotFoundError} = require('../utils/error')
+const {NotFoundError, UnAuthorized} = require('../utils/error')
 
 const mySecret = process.env.JWT_SECRET
 
@@ -12,7 +12,15 @@ function verifyAdmin(req,res,next) {          // verify admin
         if (!token){
             return next (new NotFoundError('Please login first'))
     }
+            // verify token
             const decoded = jwt.verify(token,mySecret);
+
+            // Authorisation(check for role)
+            if( decoded.role !== 'admin' ){
+              return next(new UnAuthorized('You do not have permission to access this page'))
+            }
+
+
             req.user = decoded;
             next()
     } catch(err) {

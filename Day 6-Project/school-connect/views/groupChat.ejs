@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Group Chat - <%= group.name %></title>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd] font-sans flex flex-col h-screen w-100  m-0 p-0">
+<body class="bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd] font-sans flex flex-col h-screen w-full m-0 p-0">
 
 <!-- Header -->
 <div class="w-full flex items-center justify-between px-6 py-3 bg-white/20 backdrop-blur-md border-b border-white/30 sticky top-0 z-10">
@@ -87,11 +87,20 @@ function sendMessage() {
 }
 
 function appendMessage(msg) {
+  console.log('Student messg:',msg);
+  
   const messageHTML = msg.fromStudentId === studentId
-    ? `<p class="self-end bg-[#0a9396] text-white p-2 rounded-xl max-w-[70%] ml-auto break-words mb-2">${msg.message}</p>`
+    ? `<div class="self-end bg-[#0a9396] text-white p-2 rounded-xl max-w-[70%] ml-auto break-words mb-2">
+          <span>${msg.message}</span>
+            <span class="block text-right text-sm"> ${msg.time} </span>
+      </div>
+`
     : `<div class="self-start bg-white/70 text-black p-2 rounded-xl max-w-[70%] break-words mb-2">
          <span class="font-bold text-[#005f73] block mb-1">${msg.senderName}</span>
-         <span>${msg.message}</span>
+         <span> ${msg.message}</span>
+         <br>
+        <span class="block text-right text-sm"> ${msg.time} </span>
+
        </div>`;
   chatBox.innerHTML += messageHTML;
   chatBox.scrollTop = chatBox.scrollHeight;

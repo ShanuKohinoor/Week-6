@@ -14,9 +14,13 @@ const studentRoute = require('./routes/studentRoutes')  //import studentRoute
 // const { verifyStudent } = require('./middlewares/verifyStudent') //import middleware for verification
 // const { NotFoundError } = require('./utils/error')
 
-const helmet = require('helmet')                   // 
-const cors = require('cors')                       //
-const compression = require('compression')        //
+const helmet = require('helmet');      // Adds security headers to protect the app
+const cors = require('cors');          // CORS allows our server to accept requests from other domains.
+                                      // Useful when our frontend and backend run on different ports.
+
+const compression = require('compression'); // Compression reduces the size of the response body .
+                                            // Makes our app faster by sending smaller data to the client.
+
 const rateLimit = require('express-rate-limit')  // Help app from too many requests
 const morgan = require('morgan')
 const { errorHandlingMiddleware } = require('./middlewares/errorHandlings')
@@ -36,8 +40,8 @@ app.use(
 );
 
 const limiter = rateLimit({
-  windowMs: 100 * 60 * 1000,                   // Time window in milli seconds
-  max: 100,                                   // The maximum number of requests a single IP can make during that time window.
+  windowMs: 15 * 60 * 1000,                   // Time window in milli seconds
+  max:1000                                 // The maximum number of requests a single IP can make during that time window.
 })
 app.use(limiter)                             // Applies this rule to all routes in your Express app.
                                              // So any client can only make 100 requests per 15 minutes.
@@ -100,7 +104,11 @@ io.on("connection", (socket) => {
       fromSenderId,
       toReceiverId,
       message,
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleTimeString('en-US',{
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      }),
     };
 
     const allChats = fs.existsSync(chatHistoryPath)
@@ -157,7 +165,11 @@ io.on("connection", (socket) => {
       fromStudentId,
       senderName,
       message,
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleTimeString('en-US',{
+       hour: 'numeric',
+       minute: '2-digit',
+       hour12: true
+      })
     };
 
     const allChats = fs.existsSync(chatHistoryPath)

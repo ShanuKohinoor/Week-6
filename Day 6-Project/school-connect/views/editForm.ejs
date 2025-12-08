@@ -4,72 +4,162 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Profile</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="flex items-center justify-center h-90% bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd] py-6 overflow-hidden">
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#005f73] via-[#0a9396] to-[#94d2bd] py-6 overflow-hidden">
 
   <div class="bg-white/80 rounded-2xl shadow-xl p-3 w-full max-w-md ">
     <h1 class="text-2xl text-center font-bold mb-6 text-[#0a9396]">Edit Profile</h1>
 
-    <form action="/student/updateProfile" method="POST" class="flex flex-col gap-4">
+    <form id="editForm" action="/student/updateProfile" method="POST" class="flex flex-col space-y-2">
 
       <!-- Name -->
       <div class="flex flex-col ">
         <label for="name" class="font-semibold text-[#005f73]">Name:</label>
         <input type="text" name="name" id="name" value="<%= student.name %>"
-               class="border border-gray-300 rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+               class="border border-gray-500 rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-[#0a9396]" >
       </div>
+      <p id="nameFeedBack" class="text-red-600 text-xs text-left"></p>
 
       <!-- Email -->
       <div class="flex flex-col">
         <label for="email" class="font-semibold text-[#005f73]">Email:</label>
         <input type="email" name="email" id="email" value="<%= student.email %>"
-               class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#0a9396]" required>
+        class="border border-gray-500 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#0a9396]" >
       </div>
 
-            <div class="space-y-3 mt-2">
-
-        <div class="flex flex-col opacity-60  pointer-events-none">
+        <div class="flex flex-col opacity-60  pointer-events-none ">
           <label class="font-semibold text-gray-600">Year:</label>
           <input type="text" value="<%= student.year %>" 
-            class="border border-gray-300 rounded-lg p-1 bg-gray-100">
+            class="border border-gray-500 rounded-lg p-1 bg-gray-100">
         </div>
-
+        
         <div class="flex flex-col opacity-60 pointer-events-none">
           <label class="font-semibold text-gray-600">Division:</label>
           <input type="text" value="<%= student.division %>" 
-            class="border border-gray-300 rounded-lg p-1 bg-gray-100">
+            class="border border-gray-500 rounded-lg p-1 bg-gray-100">
         </div>
 
-        <div class="flex flex-col opacity-60 pointer-events-none">
+        <div class="flex flex-col ">
           <label class="font-semibold text-gray-600">Parent Mobile:</label>
-          <input type="text" value="<%= student.parentMobile %>" 
-            class="border border-gray-300 rounded-lg p-1 bg-gray-100">
+          <input type="text" name="parentMobile" id="parentMobile" value="<%= student.parentMobile %>" 
+        class="border border-gray-500 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#0a9396]" >
         </div>
+        <p id="parentFeedBack" class="text-red-600 text-xs text-left"></p>
 
         <div class="flex flex-col opacity-60 pointer-events-none">
           <label class="font-semibold text-gray-600">Attendance:</label>
           <input type="text" value="<%= student.attendance %>%" 
-              class="border border-gray-300 rounded-lg p-1 bg-gray-100">
+              class="border border-gray-500 rounded-lg p-1 bg-gray-100">
         </div>
-      </div>
-   <div class="flex">
+   <div class="flex gap-4 px-4 ">
            <!-- Submit Button -->
       <button type="submit"
-       class="w-90 mt-5 px-5 py-3 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold rounded-lg hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-1 hover:shadow-[0_6px_15px_rgba(0,0,0,0.3)] transition duration-300 block mx-auto text-center">
+       class="w-72 mt-5 px-5 py-3 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold rounded-lg hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-1 hover:shadow-[0_6px_15px_rgba(0,0,0,0.3)] transition duration-300 block mx-auto text-center">
         Save Changes
       </button>
+    <p id="feedBack" class="text-red-600 text-xs text-left"></p>
 
 
     <!-- Back Button -->
       <a href="/student/home/<%= student.id %>" 
-       class="w-90 mt-5 px-5 py-3 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold rounded-lg hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-1 hover:shadow-[0_6px_15px_rgba(0,0,0,0.3)] transition duration-300 block mx-auto text-center">
+       class="w-72 mt-5 px-5 py-3 bg-gradient-to-br from-[#094d4f] to-[#0a9396] text-white font-bold 
+        rounded-lg hover:from-[#0a9396] hover:to-[#0e7c7b] hover:-translate-y-1 hover:shadow-[0_6px_15px_rgba(0,0,0,0.3)] transition duration-300 block mx-auto text-center">
       ← Back to Profile
     </a>
 
 </div>
   </form>
   </div>
+  <script>
+    const form = document.querySelector('#editForm');
+    const nameInput = document.querySelector('#name');
+    const emailInput = document.querySelector('#email');
+    const parentInput = document.querySelector('#parentMobile');
+    const feedback = document.querySelector('#feedBack');
+
+
+
+
+    const nameFeedback = document.getElementById('nameFeedBack');
+    const emailFeedback = document.getElementById('emailFeedBack');
+    const parentFeedback = document.getElementById('parentFeedBack');
+
+
+    // Regex Patterns
+    const namePattern = /^[A-Za-z]+\s+[A-Za-z]+(?:\s+[A-Za-z]+)?$/
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)?$/
+    const parentPattern = /^\d{10}$/;
+
+
+    function nameCheck() {
+      const name = nameInput.value.trim();
+      if(!name){
+        nameFeedback.textContent ='Name is required'
+        return false
+      } else if(!namePattern.test(name)){
+        nameFeedback.textContent = 'Please enter full name (Name should be in Alphabet)';
+        return false
+      } else {
+        nameFeedback.textContent = '';
+        return true
+      }
+      return namePattern.test(name);
+    }
+
+    function emailCheck() {
+      const email = emailInput.value.trim();
+      if(!email){
+        emailFeedback.textContent = 'Email is required'
+        return false
+      }
+      else if(!emailPattern.test(email)){
+        emailFeedback.textContent = 'Please enter a valid email';
+        return false
+      } else {
+        emailFeedback.textContent = '';
+        return true
+      }
+      return emailPattern.test(email);
+    }
+
+
+    function parentCheck() {
+      const parent = parentInput.value.trim();
+      if(!parent){
+        parentFeedback.textContent = 'Parent phone number is required'
+        return false
+      }
+      if(!parentPattern.test(parent)){
+        parentFeedback.textContent = 'Parent number must be 10 digits';
+        return false
+      } else {
+        parentFeedback.textContent = '';
+        return true
+      }
+      return parentPattern.test(parent);
+    }
+
+
+
+    form.addEventListener('submit', (e) => {
+      const allOk = nameCheck() && emailCheck() && parentCheck();
+      if(!allOk){
+        e.preventDefault()
+        feedback.textContent='Must fill all fields'
+       } else{
+        feedback.textContent = ''; 
+      }
+    });
+
+    nameInput.addEventListener('blur', nameCheck);
+    emailInput.addEventListener('blur', emailCheck);
+    parentInput.addEventListener('input', parentCheck);
+
+    form.addEventListener('input',()=>{
+      feedback.textContent = ''
+    })
+  </script>
 
 </body>
 </html>
