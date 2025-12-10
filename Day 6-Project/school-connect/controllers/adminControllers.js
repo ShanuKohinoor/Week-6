@@ -4,7 +4,6 @@ const fs = require('fs')
 const path = require('path')
 const { createAdminToken } = require('../utils/adminToken')
 const {loadStudents} = require('../utils/loadStudents')
-const { error } = require('console')
 
 // Json file path
 const filePath = path.join(__dirname,'../data/student.json')

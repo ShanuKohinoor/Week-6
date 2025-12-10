@@ -56,7 +56,7 @@
 
 // Comparison with real time example
 
-// Thread Pool: assistants inside the same kitchen chopping veggies quietly (for blocking tasks).
+// Thread Pool: assistants inside the same kitchen chopping vegetables quietly (for blocking tasks).
 
 // Worker Threads: assistant chefs inside same kitchen but doing heavy chopping / kneading.
 

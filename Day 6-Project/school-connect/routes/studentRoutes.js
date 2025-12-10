@@ -15,11 +15,12 @@ const {getStudent,
 
 const { preventStudentLogin } = require('../middlewares/preventStudentLogin');
 const { verifyStudent } = require('../middlewares/verifyStudent');
+const preventCache = require('../middlewares/preventCache');
 
 
 // Login routes
-router.get('/login', preventStudentLogin, getStudent);
-router.post('/login', preventStudentLogin, postStudent);
+router.get('/login',preventCache, preventStudentLogin, getStudent);
+router.post('/login',preventCache, preventStudentLogin, postStudent);
 
 // Student home
 router.get('/home/:id', verifyStudent, getStudentHome);

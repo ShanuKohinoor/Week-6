@@ -4,6 +4,17 @@
    const express = require('express')
    const app = express();
 
+    process.on('uncaughtException',(err)=>{
+        console.log('Uncaught exception',err.message);
+        console.error(err.stack);
+        process.exit(1)
+    })
+
+    process.on('unhandledRejection',(err)=>{
+        console.log('Unhandled Rejection:',err.message);
+        console.error(err.stack);
+        process.exit(1)
+    })
 
    const path = require('path')
     app.use(express.urlencoded({extended:true}))
@@ -15,8 +26,7 @@
 
     const patient = require('./routes/patientRoutes')
     const doctor = require('./routes/doctorRoutes');
-//const { title } = require('process');
-const { notFoundError, badRequest } = require('./utils/errors');
+//const { notFoundError, badRequest } = require('./utils/errors');
 const { errorHandlingMiddleware } = require('./middlewares/errorHandling');
 
 
@@ -49,36 +59,8 @@ const { errorHandlingMiddleware } = require('./middlewares/errorHandling');
 
               // if we dont write error handling middle ware, express will give a generic response. So must need a error handling middleware to handle error.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ERROR HANDLING MIDDLEWARE
     app.use(errorHandlingMiddleware)
-
-
-
-
 
        app.listen(3000,()=>{
     console.log('Server is running at http://localhost:3000');

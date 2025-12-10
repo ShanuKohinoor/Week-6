@@ -2,7 +2,8 @@
 //                          ------------------
 
 // If we throw error and dont catch which is uncaughtexception.
-// Can use process.on('uncaughtException') to catch unexpected errors, log them, clean up, and stop the program safely.
+// Can use process.on('uncaughtException') to catch unexpected errors,
+//       log them, clean up, and stop the program safely.
 
 
 

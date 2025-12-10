@@ -2,6 +2,19 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
+process.on('uncaughtException',(err)=>{         
+    console.log('Uncaught exception',err.message);
+    console.error(err.stack);
+    process.exit(1)
+})
+
+process.on('unhandledRejection',(err)=>{     
+    console.log('Unhandled Rejection:',err.message);
+    console.error(err.stack);
+    process.exit(1)
+})
+
+
 const { signToken} = require('./utils/jwt');
 const loginAuth = require('./middleware/auth');
 const preventCache = require('./middleware/preventCache')

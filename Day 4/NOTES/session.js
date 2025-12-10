@@ -72,17 +72,20 @@
 //                                 |
 //                                 |
 //                                 v
-//                  Server create a new session object(if savedUninitialized:false,it creates only when we add data)
+//                  Server create a new session object(if savedUninitialized:false,
+//                          it creates only when we add data)
 //                                 |
 //                                 |  When  Session saved
 //                                 |
 //                                 v
-//                Server sends a Set-cookie header(cookie name sid) to the browser with session-id and cookie options(httpOnly,maxAge etc)
+//                Server sends a Set-cookie header(cookie name sid) to the browser with 
+//                      session-id and cookie options(httpOnly,maxAge etc)
 //                                 |
 //                                 |
 //                                 |
 //                                 v
-//                      Browser saves this cookie(sends everytimes with future request until it expires or cleared)
+//                      Browser saves this cookie(sends everytimes with future request until 
+//                            it expires or cleared)
 //                                 |
 //                                 | When request send next time,
 //                                 |

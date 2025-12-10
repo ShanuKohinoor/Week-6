@@ -16,7 +16,7 @@
 //            - Clickjacking --> attackers tricking users into clicking on hidden things.
 //                  const helmet = require('helmet');
 //                  app.use(helmet()); // adds security headers automatically.
-//  * Acts like an helmet(protective shield on the HTTP responses).
+//      * Acts like an helmet(protective shield on the HTTP responses).
 
 //  2. Cors(Cross-Origin Resource Sharing):-
 //        * Normally by default, a browser blocks requests from one site to another (its for the security). 
@@ -89,7 +89,15 @@
 
 //                       const morgan = require('morgan');
 //                       app.use(morgan('dev'));
-
+//             * Morgan is a request-logging middleware for Express. 
+//             * Its main purpose is to help developers see what is happening with HTTP requests in their app.
+//             * Logs every request coming to your server (like GET, POST, etc.).
+//                     - Shows useful info for debugging and monitoring, such as:
+//                     - HTTP method (GET, POST, etc.)
+//                     - Requested URL (/, /style.css, /admin)
+//                     - Status code (200, 404, 500, etc.)
+//                     - Response time (ms)
+//                     - Response size (bytes)
 
 // 4. Compression is a middleware that makes the server’s responses smaller before sending them to the client.
 //            * Smaller responses --> faster loading time

@@ -207,7 +207,7 @@
 //           *  Has own memory space           * Shared memory with parent.
 //           *  Useful for running             * Useful for CPU-intensive JS computation.
 //                non-Js tasks
-//           * Can run any external program  * Run javascript only
+//           * Can run any external program    * Run javascript only
 //              like,python,git
 //           * Can crash independently         * Worker crash affect parent if unhandled
 //           * Lifecycle managed by OS         * Lifecycle managed within Node.js runtime

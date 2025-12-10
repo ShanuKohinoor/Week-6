@@ -8,7 +8,7 @@ const fs = require('fs')
  const {getAdmin,postAdmin,getadminHome, getAddStudent,postAddStudent,getEditform,postEditform,
       deleteStudent,getBulletinPage,uploadBulletin,deleteBulletin,logOutAdmin} = require('../controllers/adminControllers')
  
-      const {preventCache} = require('../utils/adminToken')
+      const preventCache = require('../middlewares/preventCache')
 
  const {preventAdminLogin} = require('../middlewares/preventAdminLogin')
  const {verifyAdmin} = require('../middlewares/verifyAdmin')

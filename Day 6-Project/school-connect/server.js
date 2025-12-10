@@ -1,3 +1,17 @@
+process.on('uncaughtException',(err)=>{         //Catches synchronous error that weren't handled anywhere in the code
+    console.log('Uncaught exception',err.message);
+    console.error(err.stack);
+    process.exit(1)
+})
+
+process.on('unhandledRejection',(err)=>{      // Catches Promise rejection(didnt handled with try/catch in async/await)
+    console.log('Unhandled Rejection:',err.message);
+    console.error(err.stack);
+    process.exit(1)
+})
+
+
+
 require('dotenv').config();
 const express = require('express')
 

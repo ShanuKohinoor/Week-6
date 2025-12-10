@@ -1,6 +1,17 @@
 //                Hospital maangement server
 
 
+    process.on('uncaughtException', (err) => {             // Handle uncaught error cannot catch by try catch
+        console.log('Uncaught Exception:', err.message);
+        process.exit(1);
+    });
+
+    process.on('unhandledRejection', (err) => {            // Handle unhandled error rejected by promise
+        console.log('unhandledRejection:', err.message);        
+        process.exit(1);
+    });
+
+
    const express = require('express')
    const app = express();
 
