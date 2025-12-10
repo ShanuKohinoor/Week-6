@@ -7,18 +7,15 @@ const app = express()               // Express app instance created
 const path = require('path')        // Import Node.js path module to handle file paths
 
 
-    process.on('uncaughtException',(err)=>{
-        console.log('Uncaught exception',err.message);
-        console.error(err.stack);
-        process.exit(1)
-    })
+process.on('uncaughtException',(err)=>{
+    console.log('Uncaught exception',err.message);
+    process.exit(1)
+})
 
-    process.on('unhandledRejection',(err)=>{
-        console.log('Unhandled Rejection:',err.message);
-        console.error(err.stack);
-        process.exit(1)
-    })
-
+process.on('unhandledRejection',(err)=>{
+    console.log('Unhandled Rejection:',err.message);
+    process.exit(1)
+})
 
 // Import routes for students and teachers from separate route files
 const studentRoute = require('./routes/studentRoutes')
