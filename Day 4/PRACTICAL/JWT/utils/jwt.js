@@ -1,20 +1,23 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
+const JWT_SECRET = process.env.JWT_SECRET;
+const TOKEN_EXPIRY = process.env.TOKEN_EXPIRY || '15m';
 
-
-const jwt = require('jsonwebtoken')
-
-const JWT_SECRET = 'supersecretkey';  // secret uses to sign and verify the JWT token by the user.
-
-
-
-// Function to create/sign a JWT for a user
-function signToken(user){
-    return jwt.sign(
-        { id: user.id,email: user.email, name: user.name},  // payload
-        JWT_SECRET,                                         // secret key
-        { expiresIn: '15m'}                                 // Token will expired in 15 minutes
-    )
+function signToken(user) {
+  return jwt.sign(
+    {
+         id: user.id, email: user.email, name: user.name },
+    JWT_SECRET,
+    { expiresIn: TOKEN_EXPIRY
+     }
+  );
 }
 
 
-module.exports = { signToken, JWT_SECRET };
+const preventCache =( req,res,next)=>{
+  res.set('Cache-Control','no-store')
+  next()
+}
+
+module.exports = { signToken, JWT_SECRET,preventCache };
