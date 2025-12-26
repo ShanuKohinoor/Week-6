@@ -75,29 +75,29 @@
 
 //       Authentication                                       Authorization
 //      ---------------                                       -------------
-// * To verify user's identity                       * To check what the user allowed to do.
+// * To verify user's identity                       * To check what the user is allowed to do.
 // * It can be done by :-                            * It can be done by :- 
 //     - Username + Password                                   - by checking roles/ permission stored in DB/JWT payload.
 //     - Tokens(JWT)
 //     - OAUTH(Google,GitHub login)
 // * In Node.js ,use libraries like:-               * In Node.js, use middleware to check roles like:-          
 //     - passport.js, JWT or custom logic                    -isAdmin,isUser
-// * Happens before Authentication                      * Happens after Authorization
+// * Happens before Authorization                       * Happens after Authentication
 //     - Check login or token                              - Check role/permission
 //     - Eg like:- Are you a valid user?                   - Eg:- What can you do?
 
 // Eg:-                                             *    Eg:-
 //    Authentication login route                       Authorization
 // app.post('/login',(req,res)=>{                          function isAdmin(req,res,next(){
-//  const {username,password} = req.body                      if (req.user && req.user.role === 'Admin'){
+//  const {username,password} = req.body                      if (req.user && req.user.role === 'admin'){
 // if (username ==='admin' && password === '1234'){           next()  
     // Authenticated                                           // Authorized
 //     res.send('You are logged in')                        } else {
 //    } else {                                                  res.status(403).send("Access Denied");
-//    res.status(401).send("Invalid credentials");                          // Unauthorized
+//    res.status(401).send("Invalid credentials");                  // Forbidden (authenticated but not allowed)
                         // Not authenticated               }
 //    }                                                  }
 //})                                                      // Protecting a route
-//                                                       app.get('/admin', isAdmin, (req, res) => {
-//                                                         res.send('Welcome Admin! You can manage the system.');
-//                                                       })
+//                                                           app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
+//                                                            res.send('Welcome Admin! You can manage the system.');
+//                                                           })
