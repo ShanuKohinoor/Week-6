@@ -34,12 +34,12 @@
                                                                //   * or broadcast to everyone except that user.
 
 
-     // USER JOIN: Client tell server its name
+     // User join(inform server)
          socket.on('join',(username)=>{           // 'join':- another EventListener. When new client joins send a join with their name.
             socket.username = (username || 'Anonymous').trim()    // if there is a name will take username, otherwise will take anonymous(will result like:-null,undefined/empty)
 
 
-   //   Send a welcome message only to the connecting socket(optional)
+   //   Send a welcome message only to the connecting socket
      socket.emit('welcome', { message: 'Welcome to the chat', username: socket.username })          // 'welcome' is the event name
 
     
@@ -58,27 +58,31 @@
      })
 
 
-    // CHAT MESSAGE: Client sends chat message to the server
-         socket.on('chat-message',(text)=>{
-           const msg = {
-           id :socket.id,
-           username: socket.username,
-           text : String(text),
-           time: new Date().toISOString()
-         }
+    // Client sends chat message to the server
+    socket.on('chat-message', (text) => {
+        const msg = {
+            id: socket.id,
+            username: socket.username,
+            text: String(text),
+            time: new Date().toISOString()
+        };
+        io.emit('chat-message', msg); // broadcast to everyone
+        console.log('Message:', msg);
+    });
 
-    //   Broadcast message send to all other users including the new user
-           io.emit('chat-message',msg)
-           console.log('Message:',msg);
-       })
- })
+    // Disconnect
+    socket.on('disconnect', () => {
+        if (socket.username) {
+            console.log(`${socket.username} left the chat`);
+            socket.broadcast.emit('user-left', {
+                username: socket.username,
+                time: new Date().toISOString()
+            });
+        }
+    });
+});
 
-
-
-
-
-        const Port = process.env.PORT || 3000;
-        server.listen(Port,()=>{
-            console.log(`Server is running on http://localhost:${Port}`)
-        })
-    
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});

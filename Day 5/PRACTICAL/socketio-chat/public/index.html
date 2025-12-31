@@ -3,82 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-     <script src="/socket.io/socket.io.js"></script>
-                                           <!--
-                                             Socket.IO client library
-                                              -->
-                                   
+    <title>Chat App</title>
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     
-   <h2> Chat App</h2>
-   <!--Join box-->
-   <div>
-      <input  id="username" placeholder="Enter name">
-      <button id="joinBtn">Join</button>
-    <br>
-    <br>
+    <h2>Chat App</h2>
 
-   </div>
+    <!--name,join& leave button  -->
+    <div>
+        <input id="username" placeholder="Enter name">
+        <button id="joinBtn">Join</button>
+        <button id="leaveBtn">Leave Chat</button>
+        <br><br>
+    </div>
 
-      <!--Messsage Input-->
-   <div>
-       <input id="msg" placeholder="Type a message">
-      <button id="sendBtn">Send</button>
+    <!-- Message input -->
+    <div>
+        <input id="msg" placeholder="Type a message">
+        <button id="sendBtn">Send</button>
+    </div>
 
-   </div>
-
-   <!--Chat box-->
-    <div id="chat" style="border:1px solid #ccc; height:200px; overflow:auto;"></div>
-    <br>
+    <!-- Chat box -->
+    <div id="chat" style="border:1px solid #ccc; height:300px; overflow:auto; padding:5px;"></div>
 
 <script>
-    const socket = io()   // connect to the server
-    const chat = document.getElementById('chat')
-
-  // Join button click
-    document.getElementById('joinBtn').addEventListener('click',()=>{
-          const userName = document.getElementById('username').value;
-          if (!userName) return alert('Please enter a name');
-          socket.emit('join',userName)    // send 'join' to the server
-    })
+    const socket = io();                       // Connect to the server
+    const chat = document.getElementById('chat');
+    const joinBtn = document.getElementById('joinBtn')
+    const sendBtn =  document.getElementById('sendBtn')
+    const inputMsg = document.getElementById('msg');
+    const leaveBtn =  document.getElementById('leaveBtn')
 
 
-    // Send button click
 
-    document.getElementById('sendBtn').addEventListener('click',()=>{
-        const text = document.getElementById('msg').value;
-        if(!text) return;
-        socket.emit('chat-message',text)
-    })
-    
-    // Welcome message  only for new user
-    socket.on('welcome', (data)=>{
-      const p = document.createElement('p')
-      p.textContent = `${data.message} ${data.username}`
-      chat.appendChild(p)
-    })
+    // Join button
+         joinBtn.addEventListener('click', () => {
+        const username = document.getElementById('username').value.trim();
+        if (!username) return;
+        socket.emit('join', username);
+    });
 
-    // User joined notification
-    socket.on('user-joined',(data)=>{
-        const p = document.createElement('p')
-        p.textContent = `${data.username} joined the chat`
-        chat.appendChild(p)
+    // Send message button
+       sendBtn.addEventListener('click', () => {
+        const text = inputMsg.value.trim();
+        if (!text) return;
+        socket.emit('chat-message', text);
+        inputMsg.value = '';            // clear input message after sending
+    });
 
-    })
 
-    // Recieve messages from the server
-     socket.on('chat-message',(msg)=>{
-        const p = document.createElement('p')
-        p.textContent = ` ${msg.username} : ${msg.text}`
-        chat.appendChild(p)
-     })
+    // Welcome message only for the sender
+    socket.on('welcome', (data) => {
+        const p = document.createElement('p');
+        p.textContent = `${data.message} ${data.username}`;
+        chat.appendChild(p);
+    });
+
+    // User joined (other users can see)
+    socket.on('user-joined', (data) => {
+        const p = document.createElement('p');
+        p.textContent = `${data.username} joined the chat`;
+        chat.appendChild(p);
+    });
+
+    // User left (other users can see)
+    socket.on('user-left', (data) => {
+        const p = document.createElement('p');
+        p.textContent = `${data.username} left the chat`;
+        chat.appendChild(p);
+    });
+
+    // Receive chat messages
+    socket.on('chat-message', (msg) => {
+        const p = document.createElement('p');
+    if(msg.id === socket.id){
+        // Message sent by sender
+        p.textContent = `${msg.text}`;
+    } else {
+        // Message from other users
+        p.textContent = `${msg.username}: ${msg.text}`;
+    }
+        chat.appendChild(p);
+    });
+
+        // Leave chat button
+    leaveBtn.addEventListener('click', () => {
+        socket.disconnect();                         // disconnect & leave chat
+    });
+
 </script>
-      <!---->
-
-
-  
 
 </body>
 </html>

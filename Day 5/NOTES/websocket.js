@@ -1,7 +1,7 @@
 //                                   Real time communication
 //                                   -----------------------
 
-const { WebSocketServer } = require("ws");
+// const { WebSocketServer } = require("ws");
 
 //  It is the instant/live updates b/w browser and server, without refreshing or asking again and again.
 //  Normally, if browser send a HTTP request,server responds. 
